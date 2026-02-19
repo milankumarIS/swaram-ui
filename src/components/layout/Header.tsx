@@ -14,7 +14,7 @@ const Header = () => {
 
   return (
     <header className="header">
-      <Link to={isAuthenticated ? "/dashboard" : "/"} className="header-logo">
+      <Link to={isAuthenticated ? "/" : "/"} className="header-logo">
         <span className="header-logo-icon">🎙️</span>
         VoiceAgent
       </Link>

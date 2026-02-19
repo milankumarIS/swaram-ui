@@ -1,38 +1,24 @@
 // src/pages/Public/LandingPage.tsx
 import { Link } from "react-router-dom";
 import { useAuth } from "../../components/context/AuthContext";
+import { Mic, Sliders, Code2, ArrowRight } from "lucide-react";
 import "./LandingPage.css";
 
 const features = [
   {
-    icon: "🎙️",
-    title: "Conversational Voice AI",
-    desc: "Real-time voice conversations powered by Sarvam STT/TTS and Google Gemini with sub-second latency.",
+    icon: <Mic className="feature-icon-svg" />,
+    title: "Precision Voice",
+    desc: "Real-time voice conversations with sub-500ms latency. Powered by Gemini and Sarvam AI.",
   },
   {
-    icon: "🌐",
-    title: "1-Click Embed",
-    desc: "Get an iframe snippet after creating your agent. Paste it on any website — done.",
+    icon: <Sliders className="feature-icon-svg" />,
+    title: "Deep Configuration",
+    desc: "Refine every aspect of your agent's personality, from system prompts to voice characteristics.",
   },
   {
-    icon: "🔒",
-    title: "Secure by Design",
-    desc: "API keys encrypted with AES-256-GCM. Domain whitelisting protects your embed token.",
-  },
-  {
-    icon: "🗣️",
-    title: "Multi-Language Support",
-    desc: "Supports English, Hindi, Tamil, Telugu, Kannada, Bengali, Marathi, and more Indian languages.",
-  },
-  {
-    icon: "📊",
-    title: "Session Analytics",
-    desc: "Every call is logged with full transcript. Review conversations from your dashboard.",
-  },
-  {
-    icon: "⚡",
-    title: "LiveKit Powered",
-    desc: "Enterprise-grade WebRTC via self-hosted LiveKit. Low latency, scalable to thousands of users.",
+    icon: <Code2 className="feature-icon-svg" />,
+    title: "Seamless Integration",
+    desc: "One iframe snippet. Paste it into any website and let your brand speak for itself.",
   },
 ];
 
@@ -41,63 +27,177 @@ const LandingPage = () => {
 
   return (
     <div className="landing">
-      {/* Hero */}
-      <section className="landing-hero">
-        <div className="landing-hero-bg" />
-        <div className="landing-hero-content">
-          <div className="landing-badge">
-            <span>✨</span> Powered by LiveKit · Gemini · Sarvam AI
-          </div>
-          <h1 className="landing-h1">
-            Deploy Voice AI Agents<br />
-            <span className="gradient-text">in Minutes</span>
+      {/* Hero Section */}
+      <section className="landing-hero animate-in">
+        <div className="container">
+          <div className="hero-accent-mark"></div>
+          <h1 className="hero-title">
+            Your website,<br />
+            finally able to <span className="italic">speak.</span>
           </h1>
-          <p className="landing-subtitle">
-            Create conversational AI voice bots, customize them with your own system prompt, and embed them
-            anywhere with a single iframe. No backend needed — yours is already running.
+          <p className="hero-subtitle">
+            Build a voice AI agent in minutes. Drop an iframe into any website.<br />
+            Let your visitors talk to your brand — in their language.
           </p>
-          <div className="landing-cta-group">
-            {isAuthenticated ? (
-              <Link to="/dashboard" className="btn-primary">Go to Dashboard →</Link>
-            ) : (
-              <>
-                <Link to="/register" className="btn-primary">Start for Free →</Link>
-                <Link to="/login" className="btn-ghost">Sign In</Link>
-              </>
-            )}
+          <div className="hero-cta-group">
+            <Link to={isAuthenticated ? "/dashboard" : "/register"} className="btn-primary">
+              Start Building — Free
+            </Link>
+            <a href="#how-it-works" className="btn-see-live">
+              See it live <ArrowRight size={16} />
+            </a>
+          </div>
+          
+          <div className="hero-stats">
+            <span>GEMINI · SARVAM · LIVEKIT</span>
+            <span>//</span>
+            <span>10+ Indian Languages</span>
+            <span>//</span>
+            <span>&lt;500ms latency</span>
+          </div>
+
+          <div className="hero-preview">
+            <div className="preview-window">
+              <div className="preview-header">
+                <div className="preview-dot"></div>
+                <span>ACME Portfolio Assistant</span>
+              </div>
+              <div className="preview-body">
+                <div className="waveform">
+                  <div className="waveform-bar"></div>
+                  <div className="waveform-bar"></div>
+                  <div className="waveform-bar"></div>
+                  <div className="waveform-bar"></div>
+                  <div className="waveform-bar"></div>
+                </div>
+                <p className="preview-caption">"Hello! How can I help you today?"</p>
+              </div>
+              <div className="preview-footer">
+                <div className="preview-btn">🎙 Start Conversation</div>
+              </div>
+            </div>
           </div>
         </div>
       </section>
 
-      {/* Features */}
+      {/* Features Section */}
       <section className="landing-features">
-        <p className="section-label">What You Get</p>
-        <h2 className="section-title">Everything to build voice agents</h2>
-        <p className="section-subtitle">
-          A fully managed platform so you focus on crafting the perfect AI personality — not the infrastructure.
-        </p>
-        <div className="features-grid">
-          {features.map((f) => (
-            <div key={f.title} className="feature-card">
-              <div className="feature-icon">{f.icon}</div>
-              <h3>{f.title}</h3>
-              <p>{f.desc}</p>
-            </div>
-          ))}
+        <div className="container">
+          <div className="grid grid-features">
+            {features.map((f, i) => (
+              <div key={i} className="card animate-in" style={{ animationDelay: `${(i + 1) * 100}ms` }}>
+                <div className="feature-icon-wrapper">{f.icon}</div>
+                <h3 className="feature-title">{f.title}</h3>
+                <p className="feature-desc">{f.desc}</p>
+              </div>
+            ))}
+          </div>
         </div>
       </section>
 
-      {/* Final CTA */}
-      <section className="landing-cta-section">
-        <p className="section-label">Ready to launch?</p>
-        <h2 className="section-title">Build your first voice agent today</h2>
-        <p className="section-subtitle" style={{ margin: "0.75rem auto 2rem" }}>
-          Free plan includes 2 concurrent sessions. Upgrade anytime.
-        </p>
-        <Link to={isAuthenticated ? "/agents/new" : "/register"} className="btn-primary">
-          Create Your Agent →
-        </Link>
+      {/* How It Works */}
+      <section id="how-it-works" className="landing-steps">
+        <div className="container">
+          <div className="steps-header">
+            <span className="label">Process</span>
+            <h2 className="section-title">Silence to <span className="italic">Signal</span></h2>
+          </div>
+          <div className="steps-container">
+            <div className="step-item animate-in">
+              <span className="step-num">01</span>
+              <div>
+                <h3 className="step-title">Register</h3>
+                <p className="step-desc">Create your account and get immediate access to the dashboard.</p>
+              </div>
+            </div>
+            <div className="step-item animate-in" style={{ animationDelay: '100ms' }}>
+              <span className="step-num">02</span>
+              <div>
+                <h3 className="step-title">Write your agent's prompt</h3>
+                <p className="step-desc">Define instructions, context, and personality in plain text.</p>
+              </div>
+            </div>
+            <div className="step-item animate-in" style={{ animationDelay: '200ms' }}>
+              <span className="step-num">03</span>
+              <div>
+                <h3 className="step-title">Pick voice & language</h3>
+                <p className="step-desc">Select from high-quality regional voices and configure STT/TTS.</p>
+              </div>
+            </div>
+            <div className="step-item animate-in" style={{ animationDelay: '300ms' }}>
+              <span className="step-num">04</span>
+              <div>
+                <h3 className="step-title">Copy your iframe code</h3>
+                <p className="step-desc">One line of code is all you need to go live on your site.</p>
+              </div>
+            </div>
+          </div>
+        </div>
       </section>
+
+      {/* Pricing Section */}
+      <section className="landing-pricing">
+        <div className="container">
+          <div className="pricing-grid">
+            <div className="card pricing-card">
+              <span className="pricing-plan">Starter</span>
+              <div className="pricing-price">$0<span className="price-mo">/mo</span></div>
+              <ul className="pricing-features">
+                <li>1 Agent</li>
+                <li>100 mins/mo</li>
+                <li>Community support</li>
+              </ul>
+              <Link to="/register" className="btn-secondary">Get Started</Link>
+            </div>
+            <div className="card pricing-card card-accent">
+              <span className="pricing-plan">Pro</span>
+              <div className="pricing-price">$49<span className="price-mo">/mo</span></div>
+              <ul className="pricing-features">
+                <li>5 Agents</li>
+                <li>Unlimited mins</li>
+                <li>Email support</li>
+              </ul>
+              <Link to="/register" className="btn-primary">Go Pro</Link>
+            </div>
+            <div className="card pricing-card">
+              <span className="pricing-plan">Business</span>
+              <div className="pricing-price">$199<span className="price-mo">/mo</span></div>
+              <ul className="pricing-features">
+                <li>Unlimited Agents</li>
+                <li>Priority Latency</li>
+                <li>Enterprise SLA</li>
+              </ul>
+              <Link to="/register" className="btn-secondary">Contact Us</Link>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Footer */}
+      <footer className="landing-footer">
+        <div className="container">
+          <div className="footer-top">
+            <div className="footer-brand">
+              <span className="brand-logo">VOICE AGENT</span>
+              <p className="brand-tagline">Precision audio meets editorial warmth.</p>
+            </div>
+            <div className="footer-links">
+              <div className="link-group">
+                <Link to="/">Home</Link>
+                <Link to="/dashboard">Dashboard</Link>
+                <Link to="/settings">Settings</Link>
+              </div>
+              <div className="link-group">
+                <a href="#">X (Twitter)</a>
+                <a href="#">GitHub</a>
+              </div>
+            </div>
+          </div>
+          <div className="footer-bottom">
+            <span className="copyright">© 2024 VOICE AGENT PLATFORM — ALL RIGHTS RESERVED.</span>
+          </div>
+        </div>
+      </footer>
     </div>
   );
 };

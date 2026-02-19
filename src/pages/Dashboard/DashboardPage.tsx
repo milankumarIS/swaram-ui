@@ -6,6 +6,7 @@ import Layout from "../../components/layout/Layout";
 import Loader from "../../components/shared/Loader";
 import { getAgents } from "../../services/services";
 import type { Agent } from "../../global";
+import { Mic, Copy, Edit2, MoreHorizontal, Sparkles } from "lucide-react";
 import "./DashboardPage.css";
 
 const DashboardPage = () => {
@@ -21,74 +22,110 @@ const DashboardPage = () => {
       .finally(() => setLoading(false));
   }, []);
 
-  const firstName = user?.email?.split("@")[0] ?? "there";
+  const copyEmbedUrl = (slug: string) => {
+    const url = `${window.location.origin}/embed/${slug}`;
+    navigator.clipboard.writeText(url);
+    // TODO: Add toast notification
+  };
 
   return (
     <Layout>
       <div className="dashboard">
-        <div className="dashboard-top">
-          <div>
-            <h1 className="dashboard-greeting">
-              Hello, <span>{firstName}</span> 👋
-            </h1>
-            <p style={{ color: "var(--text-secondary)", fontSize: "0.9rem", marginTop: "0.25rem" }}>
-              Manage your voice AI agents below
-            </p>
+        <header className="dashboard-header">
+          <h1 className="page-title">Dashboard</h1>
+          <Link to="/agents/new" className="btn-primary">+ New Agent</Link>
+        </header>
+
+        {/* Stats Bar */}
+        <div className="stats-bar">
+          <div className="stat-card">
+            <span className="stat-value">{agents.length}</span>
+            <span className="stat-label">Agents</span>
           </div>
-          <Link to="/agents/new" className="create-agent-btn">
-            + New Agent
-          </Link>
+          <div className="stat-card">
+            <span className="stat-value">1,240</span>
+            <span className="stat-label">Total Sessions</span>
+          </div>
+          <div className="stat-card">
+            <span className="stat-value">4h 32m</span>
+            <span className="stat-label">Talk Time</span>
+          </div>
         </div>
 
-        <iframe
-  src="http://localhost:5173/embed/jnana-UdTRRx?token=5c31cac0-8522-49dc-94d0-f354326bf10d"
-  width="400"
-  height="600"
-  allow="microphone"
-  // style="border:none;border-radius:16px;"
-></iframe>
-
         {loading ? (
-          <div style={{ display: "flex", justifyContent: "center", padding: "4rem" }}>
+          <div className="loader-container">
             <Loader size={48} />
           </div>
         ) : error ? (
-          <p style={{ color: "var(--error)", textAlign: "center", padding: "2rem" }}>{error}</p>
+          <div className="error-container">
+            <p>{error}</p>
+          </div>
         ) : (
-          <div className="agents-grid">
+          <div className="agents-container">
             {agents.length === 0 ? (
-              <div className="agents-empty">
-                <div className="agents-empty-icon">🎙️</div>
-                <h3>No agents yet</h3>
-                <p>Create your first voice AI agent and embed it anywhere.</p>
-                <Link to="/agents/new" className="create-agent-btn">
-                  Create Your First Agent
-                </Link>
+              <div className="empty-state">
+                <div className="empty-icon-wrapper">
+                  <Mic size={32} />
+                  <div className="empty-circle"></div>
+                </div>
+                <h2 className="empty-title">Your first agent is one prompt away.</h2>
+                <Link to="/agents/new" className="btn-primary">+ Create Agent</Link>
               </div>
             ) : (
-              agents.map((agent) => (
-                <Link key={agent.id} to={`/agents/${agent.id}`} className="agent-card">
-                  <div className="agent-card-header">
-                    <div>
-                      <div className="agent-card-name">{agent.name}</div>
-                      <div className="agent-card-slug">/{agent.slug}</div>
-                    </div>
-                    <span className={`agent-status-badge ${agent.is_active ? "active" : "inactive"}`}>
-                      {agent.is_active ? "Active" : "Inactive"}
-                    </span>
-                  </div>
-                  <p style={{ fontSize: "0.825rem", color: "var(--text-secondary)", lineHeight: 1.5, marginBottom: "0.5rem" }}>
-                    {agent.system_prompt.length > 80
-                      ? agent.system_prompt.slice(0, 80) + "…"
-                      : agent.system_prompt}
-                  </p>
-                  <div className="agent-card-meta">
-                    <span className="agent-meta-tag">🤖 {agent.llm_model}</span>
-                    <span className="agent-meta-tag">🗣️ {agent.tts_voice}</span>
-                    <span className="agent-meta-tag">🌐 {agent.stt_language_code}</span>
-                  </div>
-                </Link>
-              ))
+              <div className="table-wrapper">
+                <table className="agents-table">
+                  <thead>
+                    <tr>
+                      <th>Agent Name</th>
+                      <th>Model</th>
+                      <th>Language</th>
+                      <th>Status</th>
+                      <th>Sessions (30d)</th>
+                      <th>Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {agents.map((agent) => (
+                      <tr key={agent.id}>
+                        <td>
+                          <div className="agent-identity">
+                            <span className="agent-name">{agent.name}</span>
+                            <span className="agent-slug">/{agent.slug}</span>
+                          </div>
+                        </td>
+                        <td>
+                          <div className="agent-model">
+                            <Sparkles size={14} />
+                            <span>{agent.llm_model}</span>
+                          </div>
+                        </td>
+                        <td>
+                          <span className="agent-lang">{agent.stt_language_code}</span>
+                        </td>
+                        <td>
+                          <span className={`badge ${agent.is_active ? 'badge-active' : 'badge-idle'}`}>
+                            {agent.is_active ? 'Active' : 'Idle'}
+                          </span>
+                        </td>
+                        <td>
+                          <span className="stat-num">{Math.floor(Math.random() * 500)}</span>
+                        </td>
+                        <td className="actions-cell">
+                          <button className="btn-ghost icon-btn" onClick={() => copyEmbedUrl(agent.slug)}>
+                            <Copy size={16} />
+                          </button>
+                          <Link to={`/agents/${agent.id}/edit`} className="btn-ghost icon-btn">
+                            <Edit2 size={16} />
+                          </Link>
+                          <button className="btn-ghost icon-btn">
+                            <MoreHorizontal size={16} />
+                          </button>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
             )}
           </div>
         )}

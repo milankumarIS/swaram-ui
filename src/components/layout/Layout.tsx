@@ -1,6 +1,5 @@
 // src/components/layout/Layout.tsx
-// Dashboard layout wrapper — Header + main content area
-import Header from "./Header";
+import Sidebar from "./Sidebar";
 import "./Layout.css";
 
 interface LayoutProps {
@@ -9,9 +8,9 @@ interface LayoutProps {
 
 const Layout = ({ children }: LayoutProps) => {
   return (
-    <div className="layout">
-      <Header />
-      <main className="layout-main">
+    <div className="layout-container">
+      <Sidebar />
+      <main className="layout-content">
         {children}
       </main>
     </div>

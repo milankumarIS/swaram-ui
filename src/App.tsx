@@ -13,6 +13,8 @@ import DashboardPage  from "./pages/Dashboard/DashboardPage";
 import CreateAgentPage from "./pages/Agents/CreateAgentPage";
 import AgentDetailPage from "./pages/Agents/AgentDetailPage";
 import EditAgentPage  from "./pages/Agents/EditAgentPage";
+import SessionsPage   from "./pages/Dashboard/SessionsPage";
+import AnalyticsPage  from "./pages/Dashboard/AnalyticsPage";
 
 // Embed (public — iframe from customer sites)
 import EmbedPage      from "./pages/Embed/EmbedPage";
@@ -42,6 +44,20 @@ function App() {
           } />
           <Route path="/agents/:id/edit" element={
             <ProtectedRoute><EditAgentPage /></ProtectedRoute>
+          } />
+          <Route path="/sessions" element={
+            <ProtectedRoute><SessionsPage /></ProtectedRoute>
+          } />
+          <Route path="/analytics" element={
+            <ProtectedRoute><AnalyticsPage /></ProtectedRoute>
+          } />
+          <Route path="/settings" element={
+            <ProtectedRoute>
+              <div style={{ color: "var(--text-secondary)", padding: "48px" }}>
+                <h1 style={{ fontFamily: "var(--font-display)", color: "var(--text-primary)", marginBottom: "16px" }}>Settings</h1>
+                <p>Global account and organization preferences coming soon.</p>
+              </div>
+            </ProtectedRoute>
           } />
 
           {/* ── 404 ── */}
