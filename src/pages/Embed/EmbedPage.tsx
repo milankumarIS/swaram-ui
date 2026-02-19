@@ -7,28 +7,17 @@ import {
   Room,
   RoomEvent,
   ParticipantEvent,
-  LocalParticipant,
   RemoteParticipant,
   type RemoteTrackPublication,
   type RemoteTrack,
   Track,
   TrackEvent,
-  DataPacket_Kind,
 } from "livekit-client";
 import { getEmbedToken } from "../../services/services";
 import type { EmbedTokenResponse, TranscriptEntry } from "../../global";
 import "./EmbedPage.css";
 
 // ─── AudioVisualizer component ─────────────────────────────────────────────────
-const AudioVisualizer = ({ speaking }: { speaking: boolean }) => (
-  <div className="audio-visualizer">
-    {Array.from({ length: 7 }).map((_, i) => (
-      <div key={i} className={`viz-bar ${speaking ? "speaking" : ""}`}
-        style={{ animationDelay: `${i * 0.08}s` }} />
-    ))}
-  </div>
-);
-
 const AuraVisualizer = ({ speaking }: { speaking: boolean }) => (
   <div className={`viz-aura ${speaking ? "speaking" : ""}`}>🎙️</div>
 );
@@ -37,21 +26,23 @@ const AuraVisualizer = ({ speaking }: { speaking: boolean }) => (
 type Phase = "welcome" | "connecting" | "session" | "ended";
 
 const EmbedPage = () => {
-  const { slug }            = useParams<{ slug: string }>();
-  const [searchParams]      = useSearchParams();
-  const embedToken          = searchParams.get("token") || "";
+  const { slug } = useParams<{ slug: string }>();
+  const [searchParams] = useSearchParams();
+  const embedToken = searchParams.get("token") || "";
 
-  const [phase, setPhase]                   = useState<Phase>("welcome");
-  const [error, setError]                   = useState("");
-  const [agentName, setAgentName]           = useState("Voice Agent");
-  const [welcomeMsg, setWelcomeMsg]         = useState("Hi! Click the button below to start talking.");
-  const [agentSpeaking, setAgentSpeaking]   = useState(false);
-  const [micMuted, setMicMuted]             = useState(false);
-  const [transcript, setTranscript]         = useState<TranscriptEntry[]>([]);
-  const [chatInput, setChatInput]           = useState("");
-  const [lastSpoken, setLastSpoken]         = useState("");
+  const [phase, setPhase] = useState<Phase>("welcome");
+  const [error, setError] = useState("");
+  const [agentName, setAgentName] = useState("Voice Agent");
+  const [welcomeMsg, setWelcomeMsg] = useState(
+    "Hi! Click the button below to start talking.",
+  );
+  const [agentSpeaking, setAgentSpeaking] = useState(false);
+  const [micMuted, setMicMuted] = useState(false);
+  const [transcript, setTranscript] = useState<TranscriptEntry[]>([]);
+  const [chatInput, setChatInput] = useState("");
+  const [lastSpoken, setLastSpoken] = useState("");
 
-  const roomRef       = useRef<Room | null>(null);
+  const roomRef = useRef<Room | null>(null);
   const transcriptRef = useRef<HTMLDivElement>(null);
 
   // Auto-scroll transcript
@@ -94,29 +85,38 @@ const EmbedPage = () => {
       });
 
       // ── Track subscribed — play agent audio ────────────────
-      room.on(RoomEvent.TrackSubscribed, (track: RemoteTrack, _pub: RemoteTrackPublication, _participant: RemoteParticipant) => {
-        if (track.kind === Track.Kind.Audio) {
-          track.attach();
-          track.on(TrackEvent.AudioSilenceDetected, () => setAgentSpeaking(false));
+      room.on(
+        RoomEvent.TrackSubscribed,
+        (
+          track: RemoteTrack,
+          _pub: RemoteTrackPublication,
+          _participant: RemoteParticipant,
+        ) => {
+          if (track.kind === Track.Kind.Audio) {
+            track.attach();
+            track.on(TrackEvent.AudioSilenceDetected, () =>
+              setAgentSpeaking(false),
+            );
 
-          // Basic speaking detection via audio track
-          const mediaStream = new MediaStream([track.mediaStreamTrack]);
-          const audioCtx = new AudioContext();
-          const source = audioCtx.createMediaStreamSource(mediaStream);
-          const analyser = audioCtx.createAnalyser();
-          analyser.fftSize = 256;
-          source.connect(analyser);
-          const data = new Uint8Array(analyser.frequencyBinCount);
+            // Basic speaking detection via audio track
+            const mediaStream = new MediaStream([track.mediaStreamTrack]);
+            const audioCtx = new AudioContext();
+            const source = audioCtx.createMediaStreamSource(mediaStream);
+            const analyser = audioCtx.createAnalyser();
+            analyser.fftSize = 256;
+            source.connect(analyser);
+            const data = new Uint8Array(analyser.frequencyBinCount);
 
-          const detectSpeech = () => {
-            analyser.getByteFrequencyData(data);
-            const avg = data.reduce((a, b) => a + b, 0) / data.length;
-            setAgentSpeaking(avg > 12);
-            requestAnimationFrame(detectSpeech);
-          };
-          detectSpeech();
-        }
-      });
+            const detectSpeech = () => {
+              analyser.getByteFrequencyData(data);
+              const avg = data.reduce((a, b) => a + b, 0) / data.length;
+              setAgentSpeaking(avg > 12);
+              requestAnimationFrame(detectSpeech);
+            };
+            detectSpeech();
+          }
+        },
+      );
 
       // ── Data messages from agent (transcript entries) ───────
       room.on(RoomEvent.DataReceived, (payload: Uint8Array) => {
@@ -138,14 +138,19 @@ const EmbedPage = () => {
       });
 
       // ── Local speaking state ────────────────────────────────
-      room.localParticipant.on(ParticipantEvent.IsSpeakingChanged, (_speaking: boolean) => {
-        // Could be used for local mic indicator
-      });
+      room.localParticipant.on(
+        ParticipantEvent.IsSpeakingChanged,
+        (_speaking: boolean) => {
+          // Could be used for local mic indicator
+        },
+      );
 
       // Connect to LiveKit room
       await room.connect(data.livekitUrl, data.livekitToken);
     } catch (err: any) {
-      setError(err?.response?.data?.error || err?.message || "Failed to start call.");
+      setError(
+        err?.response?.data?.error || err?.message || "Failed to start call.",
+      );
       setPhase("welcome");
     }
   }, [embedToken, slug]);
@@ -165,15 +170,20 @@ const EmbedPage = () => {
     setChatInput("");
 
     // Add to local transcript
-    setTranscript((prev) => [...prev, {
-      role: "user",
-      text,
-      timestamp: new Date().toISOString(),
-    }]);
+    setTranscript((prev) => [
+      ...prev,
+      {
+        role: "user",
+        text,
+        timestamp: new Date().toISOString(),
+      },
+    ]);
 
     // Send via LiveKit data channel to the Python agent
     const encoder = new TextEncoder();
-    const payload = encoder.encode(JSON.stringify({ type: "chat_input", text }));
+    const payload = encoder.encode(
+      JSON.stringify({ type: "chat_input", text }),
+    );
     await roomRef.current.localParticipant.publishData(payload, {
       reliable: true,
       destinationIdentities: [],
@@ -191,7 +201,6 @@ const EmbedPage = () => {
   // ─── Render ────────────────────────────────────────────────────────────────
   return (
     <div className="embed-page">
-
       {/* ── WELCOME VIEW ──────────────────────────────────── */}
       {(phase === "welcome" || phase === "connecting") && (
         <div className="embed-welcome">
@@ -217,7 +226,9 @@ const EmbedPage = () => {
             )}
           </button>
 
-          <div className="embed-powered">Powered by VoiceAgent · LiveKit · Gemini</div>
+          <div className="embed-powered">
+            Powered by VoiceAgent · LiveKit · Gemini
+          </div>
         </div>
       )}
 
@@ -236,9 +247,7 @@ const EmbedPage = () => {
           </div>
 
           {/* Last spoken by agent */}
-          <p className="agent-spoken-text">
-            {agentSpeaking ? lastSpoken : ""}
-          </p>
+          <p className="agent-spoken-text">{agentSpeaking ? lastSpoken : ""}</p>
 
           {/* Transcript */}
           <div className="embed-transcript" ref={transcriptRef}>

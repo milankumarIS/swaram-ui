@@ -5,24 +5,27 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { useAuth } from "../../components/context/AuthContext";
-import { login, getMe } from "../../services/services";
-import { TOKEN_KEY, REFRESH_KEY } from "../../services/axiosConfig";
+import { login } from "../../services/services";
 import "./AuthPage.css";
 
 const schema = z.object({
-  email:    z.string().email("Enter a valid email"),
+  email: z.string().email("Enter a valid email"),
   password: z.string().min(1, "Password is required"),
 });
 
 type FormData = z.infer<typeof schema>;
 
 const LoginPage = () => {
-  const navigate   = useNavigate();
+  const navigate = useNavigate();
   const { login: authLogin } = useAuth();
   const [apiError, setApiError] = useState("");
-  const [loading,  setLoading]  = useState(false);
+  const [loading, setLoading] = useState(false);
 
-  const { register, handleSubmit, formState: { errors } } = useForm<FormData>({
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<FormData>({
     resolver: zodResolver(schema),
   });
 
@@ -35,7 +38,9 @@ const LoginPage = () => {
       authLogin(accessToken, refreshToken || "", user);
       navigate("/dashboard");
     } catch (err: any) {
-      setApiError(err?.response?.data?.error || "Login failed. Please try again.");
+      setApiError(
+        err?.response?.data?.error || "Login failed. Please try again.",
+      );
     } finally {
       setLoading(false);
     }
@@ -65,7 +70,9 @@ const LoginPage = () => {
               {...register("email")}
               autoComplete="email"
             />
-            {errors.email && <span className="form-error">{errors.email.message}</span>}
+            {errors.email && (
+              <span className="form-error">{errors.email.message}</span>
+            )}
           </div>
 
           <div className="form-group">
@@ -78,7 +85,9 @@ const LoginPage = () => {
               {...register("password")}
               autoComplete="current-password"
             />
-            {errors.password && <span className="form-error">{errors.password.message}</span>}
+            {errors.password && (
+              <span className="form-error">{errors.password.message}</span>
+            )}
           </div>
 
           <button
@@ -92,8 +101,7 @@ const LoginPage = () => {
         </form>
 
         <p className="auth-footer">
-          Don't have an account?{" "}
-          <Link to="/register">Create one free</Link>
+          Don't have an account? <Link to="/register">Create one free</Link>
         </p>
       </div>
     </div>
