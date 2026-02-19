@@ -171,7 +171,7 @@ const CreateAgentPage = () => {
                 {step === 3 && (
                   <div className="form-step animate-in">
                     <header className="form-header">
-                      <h2 className="form-step-title">AI Intelligence</h2>
+                      <p className="wizard-subtitle">Design the intelligence and personality of your Swaram agent.</p>
                     </header>
                     <div className="form-group">
                       <label className="label">Large Language Model</label>
@@ -222,7 +222,7 @@ const CreateAgentPage = () => {
                   Back
                 </button>
                 {step < steps.length ? (
-                  <button type="button" className="btn-primary" onClick={nextStep}>
+                  <button type="button" className="btn-primary" onClick={nextStep} style={{display:'flex', gap:'4px'}}>
                     Continue <ArrowRight size={16} />
                   </button>
                 ) : (
@@ -262,7 +262,7 @@ const CreateAgentPage = () => {
                 </div>
 
                 <div style={{ marginTop: "40px" }}>
-                  <button className="btn-ghost" style={{ width: "100%", gap: "12px" }}>
+                  <button className="btn-ghost" style={{ width: "fit-content", gap: "12px" , display:'flex'}}>
                     <Headphones size={16} /> Test Voice: {ttsVoice}
                   </button>
                 </div>

@@ -1,7 +1,14 @@
 // src/components/layout/Sidebar.tsx
 import { Link, useLocation } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
-import { LayoutDashboard, Users, MessageSquare, BarChart2, Settings, LogOut } from "lucide-react";
+import {
+  BarChart2,
+  LayoutDashboard,
+  MessageSquare,
+  LogOut,
+  User,
+  HelpCircle
+} from "lucide-react";
 import "./Sidebar.css";
 
 const Sidebar = () => {
@@ -9,33 +16,43 @@ const Sidebar = () => {
   const location = useLocation();
 
   const navItems = [
-    { name: "Dashboard", path: "/dashboard", icon: <LayoutDashboard size={20} /> },
-    { name: "My Agents", path: "/dashboard", icon: <Users size={20} /> }, // Assuming agents list is on dashboard
-    { name: "Sessions", path: "/sessions", icon: <MessageSquare size={20} /> },
-    { name: "Analytics", path: "/analytics", icon: <BarChart2 size={20} /> },
-    { name: "Settings", path: "/settings", icon: <Settings size={20} /> },
+    { icon: <LayoutDashboard size={18} />, label: "Dashboard", path: "/dashboard" },
+    // { icon: <Users size={18} />, label: "My Agents", path: "/dashboard" }, // In this simple version, same as dashboard
+    { icon: <MessageSquare size={18} />, label: "Sessions", path: "/sessions" },
+    { icon: <BarChart2 size={18} />, label: "Analytics", path: "/analytics" },
+    { icon: <User size={18} />, label: "Profile", path: "/profile" },
+    // { icon: <Settings size={18} />, label: "Settings", path: "/settings" },
+    { icon: <HelpCircle size={18} />, label: "Documentation", path: "https://github.com", external: true },
   ];
 
   return (
     <aside className="sidebar">
-      <div className="sidebar-header">
-        <Link to="/" className="sidebar-logo">VOICE AGENT</Link>
-      </div>
+ 
 
-      <nav className="sidebar-nav">
-        {navItems.map((item) => {
-          const isActive = location.pathname === item.path;
-          return (
-            <Link
-              key={item.name}
-              to={item.path}
-              className={`nav-item ${isActive ? "active" : ""}`}
+      <nav className="sidebar-nav" style={{marginTop:'2rem'}}>
+        {navItems.map((item) => (
+          item.external ? (
+            <a
+              key={item.label}
+              href={item.path}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="nav-item"
             >
               <span className="nav-icon">{item.icon}</span>
-              <span className="nav-text">{item.name}</span>
+              {item.label}
+            </a>
+          ) : (
+            <Link
+              key={item.label}
+              to={item.path}
+              className={`nav-item ${location.pathname === item.path ? "active" : ""}`}
+            >
+              <span className="nav-icon">{item.icon}</span>
+              {item.label}
             </Link>
-          );
-        })}
+          )
+        ))}
       </nav>
 
       <div className="sidebar-footer">

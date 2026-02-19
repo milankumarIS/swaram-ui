@@ -1,5 +1,6 @@
 // src/components/layout/Layout.tsx
 import Sidebar from "./Sidebar";
+import PageWrapper from "../shared/PageWrapper";
 import "./Layout.css";
 
 interface LayoutProps {
@@ -11,7 +12,9 @@ const Layout = ({ children }: LayoutProps) => {
     <div className="layout-container">
       <Sidebar />
       <main className="layout-content">
-        {children}
+        <PageWrapper>
+          {children}
+        </PageWrapper>
       </main>
     </div>
   );

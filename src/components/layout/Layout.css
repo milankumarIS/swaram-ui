@@ -4,12 +4,16 @@
   display: grid;
   grid-template-columns: 240px 1fr;
   min-height: 100vh;
+  padding-top: 64px;
+  background: var(--bg-void);
+  border-radius: 8px 8px 0px 0px;
 }
 
 .layout-content {
   background-color: var(--bg-void);
   padding: 48px 64px;
   overflow-y: auto;
+  border-radius: 8px;
 }
 
 @media (max-width: 1024px) {

@@ -1,6 +1,6 @@
 // src/pages/Dashboard/AnalyticsPage.tsx
 import Layout from "../../components/layout/Layout";
-import { TrendingUp, Users, Activity } from "lucide-react";
+import { TrendingUp, Activity } from "lucide-react";
 import "./AnalyticsPage.css";
 
 const AnalyticsPage = () => {
@@ -8,7 +8,7 @@ const AnalyticsPage = () => {
     { label: "Total Conversations", value: "1,284", change: "+12.5%", icon: <Activity size={20} /> },
     { label: "Average Duration", value: "4m 12s", change: "-2.4%", icon: <Activity size={20} /> },
     { label: "Completion Rate", value: "94.2%", change: "+0.8%", icon: <TrendingUp size={20} /> },
-    { label: "Unique Users", value: "412", change: "+5.3%", icon: <Users size={20} /> },
+    { label: "Unique Users", value: "412", change: "+5.3%", icon: <Activity size={20} /> },
   ];
 
   return (
@@ -33,7 +33,7 @@ const AnalyticsPage = () => {
 
           <div className="chart-placeholder-card full-width">
             <div className="card-header">
-              <h3 className="card-title">Call Volume (24h)</h3>
+              <h3 className="card-title1">Call Volume (24h)</h3>
             </div>
             <div className="mock-chart-container">
               {[...Array(24)].map((_, i) => (

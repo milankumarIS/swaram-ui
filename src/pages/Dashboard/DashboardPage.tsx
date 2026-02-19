@@ -10,7 +10,7 @@ import { Mic, Copy, Edit2, MoreHorizontal, Sparkles } from "lucide-react";
 import "./DashboardPage.css";
 
 const DashboardPage = () => {
-  const { user } = useAuth();
+  const { } = useAuth();
   const [agents, setAgents] = useState<Agent[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");

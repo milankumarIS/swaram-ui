@@ -80,10 +80,10 @@ const RegisterPage = () => {
 
       {/* Right Panel */}
       <div className="auth-panel-right">
-        <Link to="/" className="auth-logo-link">VOICE AGENT</Link>
+        <Link to="/" className="auth-logo-link">SWARAM</Link>
 
         <div className="auth-form-container">
-          <h1 className="auth-title">Create your account</h1>
+          <h1 className="auth-title">Join Swaram</h1>
           <p className="auth-subtitle">Free forever. No credit card required.</p>
 
           {apiError && <div className="auth-form-error-banner">{apiError}</div>}

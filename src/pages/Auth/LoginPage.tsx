@@ -80,11 +80,11 @@ const LoginPage = () => {
 
       {/* Right Panel */}
       <div className="auth-panel-right">
-        <Link to="/" className="auth-logo-link">VOICE AGENT</Link>
+        <Link to="/" className="auth-logo-link">SWARAM</Link>
         
         <div className="auth-form-container">
           <h1 className="auth-title">Welcome back</h1>
-          <p className="auth-subtitle">Sign in to your account</p>
+          <p className="auth-subtitle">Sign in to your Swaram account</p>
 
           {apiError && <div className="auth-form-error-banner">{apiError}</div>}
 

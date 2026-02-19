@@ -238,3 +238,8 @@
   .builder-split { grid-template-columns: 1fr; }
   .preview-sticky { position: static; margin-bottom: 48px; }
 }
+
+.error-text{
+  color: #ff8080;
+  text-align: left;
+}

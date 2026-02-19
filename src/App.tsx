@@ -1,12 +1,22 @@
 // src/App.tsx
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { BrowserRouter as Router, Routes, Route, useLocation } from "react-router-dom";
+import { AnimatePresence } from "framer-motion";
 import { AuthProvider } from "./components/context/AuthContext";
 import ProtectedRoute from "./components/shared/ProtectedRoute";
+import Header from "./components/layout/Header";
+import Footer from "./components/layout/Footer";
+import PageWrapper from "./components/shared/PageWrapper";
 
 // Public pages
 import LandingPage    from "./pages/Public/LandingPage";
 import LoginPage      from "./pages/Auth/LoginPage";
 import RegisterPage   from "./pages/Auth/RegisterPage";
+import AboutPage      from "./pages/Public/AboutPage";
+import TermsPage      from "./pages/Public/TermsPage";
+import PrivacyPage    from "./pages/Public/PrivacyPage";
+import SecurityPage   from "./pages/Public/SecurityPage";
+import ContactPage    from "./pages/Public/ContactPage";
 
 // Protected pages
 import DashboardPage  from "./pages/Dashboard/DashboardPage";
@@ -15,19 +25,54 @@ import AgentDetailPage from "./pages/Agents/AgentDetailPage";
 import EditAgentPage  from "./pages/Agents/EditAgentPage";
 import SessionsPage   from "./pages/Dashboard/SessionsPage";
 import AnalyticsPage  from "./pages/Dashboard/AnalyticsPage";
+import ProfilePage    from "./pages/Dashboard/ProfilePage";
 
 // Embed (public — iframe from customer sites)
 import EmbedPage      from "./pages/Embed/EmbedPage";
 
-function App() {
+import "./App.css";
+
+const AppContent = () => {
+  const location = useLocation();
+  const isEmbed = location.pathname.startsWith("/embed");
+  const [isAtTop, setIsAtTop] = useState(true);
+  const [isAtBottom, setIsAtBottom] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const atTop = window.scrollY === 0;
+      const atBottom = window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 2;
+      
+      setIsAtTop(atTop);
+      setIsAtBottom(atBottom);
+    };
+
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    handleScroll();
+
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
   return (
-    <AuthProvider>
-      <Router>
-        <Routes>
+    <>
+      <Header />
+      <div 
+        className="landing-cover" 
+        data-at-top={isAtTop} 
+        data-at-bottom={isAtBottom}
+      />
+
+      <AnimatePresence mode="wait">
+        <Routes location={location} key={location.pathname}>
           {/* ── Public ── */}
-          <Route path="/"          element={<LandingPage />} />
-          <Route path="/login"     element={<LoginPage />} />
-          <Route path="/register"  element={<RegisterPage />} />
+          <Route path="/"          element={<PageWrapper><LandingPage /></PageWrapper>} />
+          <Route path="/login"     element={<PageWrapper><LoginPage /></PageWrapper>} />
+          <Route path="/register"  element={<PageWrapper><RegisterPage /></PageWrapper>} />
+          <Route path="/about"     element={<PageWrapper><AboutPage /></PageWrapper>} />
+          <Route path="/terms"     element={<PageWrapper><TermsPage /></PageWrapper>} />
+          <Route path="/privacy"   element={<PageWrapper><PrivacyPage /></PageWrapper>} />
+          <Route path="/security"  element={<PageWrapper><SecurityPage /></PageWrapper>} />
+          <Route path="/contact"   element={<PageWrapper><ContactPage /></PageWrapper>} />
 
           {/* ── Embed widget (public, no auth) ── */}
           <Route path="/embed/:slug" element={<EmbedPage />} />
@@ -36,13 +81,16 @@ function App() {
           <Route path="/dashboard" element={
             <ProtectedRoute><DashboardPage /></ProtectedRoute>
           } />
+          <Route path="/profile" element={
+            <ProtectedRoute><ProfilePage /></ProtectedRoute>
+          } />
           <Route path="/agents/new" element={
             <ProtectedRoute><CreateAgentPage /></ProtectedRoute>
           } />
-          <Route path="/agents/:id" element={
+          <Route path="/agents/:slug" element={
             <ProtectedRoute><AgentDetailPage /></ProtectedRoute>
           } />
-          <Route path="/agents/:id/edit" element={
+          <Route path="/agents/:slug/edit" element={
             <ProtectedRoute><EditAgentPage /></ProtectedRoute>
           } />
           <Route path="/sessions" element={
@@ -67,6 +115,17 @@ function App() {
             </div>
           } />
         </Routes>
+      </AnimatePresence>
+      {!isEmbed && <Footer />}
+    </>
+  );
+};
+
+function App() {
+  return (
+    <AuthProvider>
+      <Router>
+        <AppContent />
       </Router>
     </AuthProvider>
   );

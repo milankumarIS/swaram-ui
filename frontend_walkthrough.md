@@ -1,6 +1,7 @@
-# VoiceAgent — Frontend Walkthrough
+# Swaram — Frontend Walkthrough
+Welcome to the frontend documentation for **Swaram**, a premium AI voice agent platform.
 
-This document provides a detailed overview of the frontend architecture, pages, and features of the VoiceAgent platform.
+This document provides a detailed overview of the frontend architecture, pages, and features of the Swaram platform.
 
 ## 🚀 Overview
 

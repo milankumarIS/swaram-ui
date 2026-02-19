@@ -1,26 +1,9 @@
 // src/pages/Public/LandingPage.tsx
 import { Link } from "react-router-dom";
 import { useAuth } from "../../components/context/AuthContext";
-import { Mic, Sliders, Code2, ArrowRight } from "lucide-react";
+import { Mic, Sliders, Code2, ArrowRight, Languages } from "lucide-react";
+import { motion } from "framer-motion";
 import "./LandingPage.css";
-
-const features = [
-  {
-    icon: <Mic className="feature-icon-svg" />,
-    title: "Precision Voice",
-    desc: "Real-time voice conversations with sub-500ms latency. Powered by Gemini and Sarvam AI.",
-  },
-  {
-    icon: <Sliders className="feature-icon-svg" />,
-    title: "Deep Configuration",
-    desc: "Refine every aspect of your agent's personality, from system prompts to voice characteristics.",
-  },
-  {
-    icon: <Code2 className="feature-icon-svg" />,
-    title: "Seamless Integration",
-    desc: "One iframe snippet. Paste it into any website and let your brand speak for itself.",
-  },
-];
 
 const LandingPage = () => {
   const { isAuthenticated } = useAuth();
@@ -28,28 +11,33 @@ const LandingPage = () => {
   return (
     <div className="landing">
       {/* Hero Section */}
-      <section className="landing-hero animate-in">
+      <motion.section className="landing-hero animate-in">
         <div className="container">
           <div className="hero-accent-mark"></div>
           <h1 className="hero-title">
-            Your website,<br />
+            Your website,
+            <br />
             finally able to <span className="italic">speak.</span>
           </h1>
           <p className="hero-subtitle">
-            Build a voice AI agent in minutes. Drop an iframe into any website.<br />
+            Build a voice AI agent in minutes. Drop an iframe into any website.
+            <br />
             Let your visitors talk to your brand — in their language.
           </p>
           <div className="hero-cta-group">
-            <Link to={isAuthenticated ? "/dashboard" : "/register"} className="btn-primary">
+            <Link
+              to={isAuthenticated ? "/dashboard" : "/register"}
+              className="btn-primary"
+            >
               Start Building — Free
             </Link>
             <a href="#how-it-works" className="btn-see-live">
               See it live <ArrowRight size={16} />
             </a>
           </div>
-          
+
           <div className="hero-stats">
-            <span>GEMINI · SARVAM · LIVEKIT</span>
+            <span>GEMINI · CLAUDE · GPT-4o</span>
             <span>//</span>
             <span>10+ Indian Languages</span>
             <span>//</span>
@@ -59,8 +47,8 @@ const LandingPage = () => {
           <div className="hero-preview">
             <div className="preview-window">
               <div className="preview-header">
-                <div className="preview-dot"></div>
-                <span>ACME Portfolio Assistant</span>
+                <div className="url">swaram.io/preview</div>
+                <span>Swaram Portfolio Assistant</span>
               </div>
               <div className="preview-body">
                 <div className="waveform">
@@ -70,73 +58,338 @@ const LandingPage = () => {
                   <div className="waveform-bar"></div>
                   <div className="waveform-bar"></div>
                 </div>
-                <p className="preview-caption">"Hello! How can I help you today?"</p>
+                <p className="preview-caption">
+                  "Hello! How can I help you today?"
+                </p>
               </div>
               <div className="preview-footer">
-                <div className="preview-btn">🎙 Start Conversation</div>
+                <div className="preview-btn">Start Conversation</div>
               </div>
             </div>
           </div>
         </div>
-      </section>
+      </motion.section>
 
-      {/* Features Section */}
-      <section className="landing-features">
-        <div className="container">
-          <div className="grid grid-features">
-            {features.map((f, i) => (
-              <div key={i} className="card animate-in" style={{ animationDelay: `${(i + 1) * 100}ms` }}>
-                <div className="feature-icon-wrapper">{f.icon}</div>
-                <h3 className="feature-title">{f.title}</h3>
-                <p className="feature-desc">{f.desc}</p>
-              </div>
-            ))}
+      {/* Trusted By Ticker */}
+      <motion.section className="landing-ticker">
+        <div className="ticker-wrapper">
+          <div className="ticker-content">
+            {/* Set 1 */}
+            <span>GEMINI 2.0</span>
+            <span className="ticker-dot"></span>
+            <span>CLAUDE 3.5 SONNET</span>
+            <span className="ticker-dot"></span>
+            <span>GPT-4o</span>
+            <span className="ticker-dot"></span>
+            <span>LLAMA 3.1</span>
+            <span className="ticker-dot"></span>
+            <span>MISTRAL LARGE</span>
+            <span className="ticker-dot"></span>
+            <span>SARVAM AI</span>
+            <span className="ticker-dot"></span>
+            <span>ELEVENLABS</span>
+            <span className="ticker-dot"></span>
+            <span>DEEPGRAM</span>
+            <span className="ticker-dot"></span>
+            <span>OPENAI TTS</span>
+            <span className="ticker-dot"></span>
+            {/* Set 2 (Duplicate for infinite loop) */}
+            <span>GEMINI 2.0</span>
+            <span className="ticker-dot"></span>
+            <span>CLAUDE 3.5 SONNET</span>
+            <span className="ticker-dot"></span>
+            <span>GPT-4o</span>
+            <span className="ticker-dot"></span>
+            <span>LLAMA 3.1</span>
+            <span className="ticker-dot"></span>
+            <span>MISTRAL LARGE</span>
+            <span className="ticker-dot"></span>
+            <span>SARVAM AI</span>
+            <span className="ticker-dot"></span>
+            <span>ELEVENLABS</span>
+            <span className="ticker-dot"></span>
+            <span>DEEPGRAM</span>
+            <span className="ticker-dot"></span>
+            <span>OPENAI TTS</span>
+            <span className="ticker-dot"></span>
           </div>
         </div>
-      </section>
+      </motion.section>
+
+      {/* Bento Grid Features */}
+      <motion.section className="landing-features">
+        <div className="container">
+          <header className="section-header">
+            <span className="section-tag">Capabilities</span>
+            <h2 className="section-title">Engineered for the elite.</h2>
+          </header>
+
+          <div className="bento-grid">
+            <div className="bento-item main-feature animate-in">
+              <div className="bento-visual">
+                <div className="visual-overlay"></div>
+                <img
+                  src="https://images.unsplash.com/photo-1607723619307-260d7a1e1f12?q=80&w=1129&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+                  alt="AI Latency"
+                  className="bento-bg"
+                />
+              </div>
+              <div className="bento-content">
+                <Mic className="bento-icon" />
+                <h3>Low Latency Bridge</h3>
+                <p>
+                  Sub-500ms response times that feel indistinguishable from
+                  human conversation.
+                </p>
+              </div>
+            </div>
+
+            <div
+              className="bento-item secondary-feature animate-in"
+              style={{ animationDelay: "0.1s" }}
+            >
+              <div className="bento-visual">
+                <div className="visual-overlay"></div>
+                <img
+                  src="https://images.unsplash.com/photo-1663789669038-ba180c8c155a?q=80&w=1228&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+                  alt="Identity Forge"
+                  className="bento-bg"
+                />
+              </div>
+              <div className="bento-content">
+                <Sliders className="bento-icon" />
+                <h3>Identity Forge</h3>
+                <p>
+                  Define persona, tone, and knowledge with surgical precision.
+                </p>
+              </div>
+            </div>
+
+            <div
+              className="bento-item secondary-feature animate-in"
+              style={{ animationDelay: "0.2s" }}
+            >
+              <div className="bento-visual">
+                <div className="visual-overlay"></div>
+                <img
+                  src="https://images.unsplash.com/photo-1633356122544-f134324a6cee?q=80&w=1000&auto=format&fit=crop"
+                  alt="SDK Integration"
+                  className="bento-bg"
+                />
+              </div>
+              <div className="bento-content">
+                <Code2 className="bento-icon" />
+                <h3>Drop-in SDK</h3>
+                <p>A single line of code to make your entire site speak.</p>
+              </div>
+            </div>
+
+            <div
+              className="bento-item wide-feature animate-in"
+              style={{ animationDelay: "0.3s" }}
+            >
+              <div className="bento-visual">
+                <div className="visual-overlay"></div>
+                <img
+                  src="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=1000&auto=format&fit=crop"
+                  alt="Regional Depth"
+                  className="bento-bg"
+                />
+              </div>
+              <div className="bento-content">
+                <Languages className="bento-icon" />
+
+                <div
+                  className="bento-text-group"
+                  style={{ marginBottom: "12px" }}
+                >
+                  <h3>Regional Depth</h3>
+                  <p>
+                    Native support for 10+ Indian languages including Hindi,
+                    Tamil, and Bengali.
+                  </p>
+                </div>
+                <div className="languages-tag-cloud">
+                  <span>नमस्ते</span>
+                  <span>வணக்கம்</span>
+                  <span>নমস্কার</span>
+                  <span>Hello</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </motion.section>
+
+      {/* Use Cases Section */}
+      <motion.section className="landing-use-cases" id="how-it-works">
+        <div className="container">
+          <div className="use-cases-layout">
+            <div className="use-cases-content">
+              <span className="section-tag">Use Cases</span>
+              <h2 className="use-case-title">
+                One platform,
+                <br />
+                infinite dialogue.
+              </h2>
+
+              <div className="use-case-list">
+                <div className="use-case-item active">
+                  <h4>01 / Customer Support</h4>
+                  <p>
+                    Resolve inquiries 24/7 without the overhead of a call
+                    center.
+                  </p>
+                </div>
+                <div className="use-case-item">
+                  <h4>02 / Sales Guidance</h4>
+                  <p>
+                    Guide customers through complex purchases with
+                    conversational ease.
+                  </p>
+                </div>
+                <div className="use-case-item">
+                  <h4>03 / Language Education</h4>
+                  <p>
+                    Interactive practice for learners in a low-pressure
+                    environment.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <div className="use-cases-visual">
+              <div className="iphone-mockup">
+                <motion.div 
+                  className="iphone-screen"
+                  initial="hidden"
+                  whileInView="show"
+                  viewport={{ once: true, amount: 0.5 }}
+                  variants={{
+                    hidden: { opacity: 0 },
+                    show: {
+                      opacity: 1,
+                      transition: {
+                        staggerChildren: 0.8,
+                        delayChildren: 0.5
+                      }
+                    }
+                  }}
+                >
+                  <motion.div 
+                    className="chat-bubble bot"
+                    variants={{
+                      hidden: { opacity: 0, x: -20, scale: 0.9 },
+                      show: { opacity: 1, x: 0, scale: 1 }
+                    }}
+                  >
+                    "How can I help you today?"
+                  </motion.div>
+                  <motion.div 
+                    className="chat-bubble user"
+                    variants={{
+                      hidden: { opacity: 0, x: 20, scale: 0.9 },
+                      show: { opacity: 1, x: 0, scale: 1 }
+                    }}
+                  >
+                    "I need to track my order."
+                  </motion.div>
+                  <motion.div 
+                    className="chat-bubble bot"
+                    variants={{
+                      hidden: { opacity: 0, x: -20, scale: 0.9 },
+                      show: { opacity: 1, x: 0, scale: 1 }
+                    }}
+                  >
+                    "Searching... I've found your delivery."
+                  </motion.div>
+                  <motion.div 
+                    className="chat-bubble bot"
+                    variants={{
+                      hidden: { opacity: 0, x: -20, scale: 0.9 },
+                      show: { opacity: 1, x: 0, scale: 1 }
+                    }}
+                  >
+                    "Your order #45821 was shipped yesterday via Express Delivery."
+                  </motion.div>
+                  <motion.div 
+                    className="chat-bubble user"
+                    variants={{
+                      hidden: { opacity: 0, x: 20, scale: 0.9 },
+                      show: { opacity: 1, x: 0, scale: 1 }
+                    }}
+                  >
+                    "Can I see the live tracking link?"
+                  </motion.div>
+                </motion.div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </motion.section>
 
       {/* How It Works */}
-      <section id="how-it-works" className="landing-steps">
+      <motion.section className="landing-steps">
         <div className="container">
           <div className="steps-header">
             <span className="label">Process</span>
-            <h2 className="section-title">Silence to <span className="italic">Signal</span></h2>
+            <h2 className="section-title">
+              Silence to <span className="italic">Signal</span>
+            </h2>
           </div>
           <div className="steps-container">
             <div className="step-item animate-in">
               <span className="step-num">01</span>
               <div>
                 <h3 className="step-title">Register</h3>
-                <p className="step-desc">Create your account and get immediate access to the dashboard.</p>
+                <p className="step-desc">
+                  Create your account and get immediate access to the dashboard.
+                </p>
               </div>
             </div>
-            <div className="step-item animate-in" style={{ animationDelay: '100ms' }}>
+            <div
+              className="step-item animate-in"
+              style={{ animationDelay: "100ms" }}
+            >
               <span className="step-num">02</span>
               <div>
                 <h3 className="step-title">Write your agent's prompt</h3>
-                <p className="step-desc">Define instructions, context, and personality in plain text.</p>
+                <p className="step-desc">
+                  Define instructions, context, and personality in plain text.
+                </p>
               </div>
             </div>
-            <div className="step-item animate-in" style={{ animationDelay: '200ms' }}>
+            <div
+              className="step-item animate-in"
+              style={{ animationDelay: "200ms" }}
+            >
               <span className="step-num">03</span>
               <div>
                 <h3 className="step-title">Pick voice & language</h3>
-                <p className="step-desc">Select from high-quality regional voices and configure STT/TTS.</p>
+                <p className="step-desc">
+                  Select from high-quality regional voices and configure
+                  STT/TTS.
+                </p>
               </div>
             </div>
-            <div className="step-item animate-in" style={{ animationDelay: '300ms' }}>
+            <div
+              className="step-item animate-in"
+              style={{ animationDelay: "300ms" }}
+            >
               <span className="step-num">04</span>
               <div>
                 <h3 className="step-title">Copy your iframe code</h3>
-                <p className="step-desc">One line of code is all you need to go live on your site.</p>
+                <p className="step-desc">
+                  One line of code is all you need to go live on your site.
+                </p>
               </div>
             </div>
           </div>
         </div>
-      </section>
+      </motion.section>
 
       {/* Pricing Section */}
-      <section className="landing-pricing">
+      {/* <section className="landing-pricing">
         <div className="container">
           <div className="pricing-grid">
             <div className="card pricing-card">
@@ -171,33 +424,9 @@ const LandingPage = () => {
             </div>
           </div>
         </div>
-      </section>
+      </section> */}
 
-      {/* Footer */}
-      <footer className="landing-footer">
-        <div className="container">
-          <div className="footer-top">
-            <div className="footer-brand">
-              <span className="brand-logo">VOICE AGENT</span>
-              <p className="brand-tagline">Precision audio meets editorial warmth.</p>
-            </div>
-            <div className="footer-links">
-              <div className="link-group">
-                <Link to="/">Home</Link>
-                <Link to="/dashboard">Dashboard</Link>
-                <Link to="/settings">Settings</Link>
-              </div>
-              <div className="link-group">
-                <a href="#">X (Twitter)</a>
-                <a href="#">GitHub</a>
-              </div>
-            </div>
-          </div>
-          <div className="footer-bottom">
-            <span className="copyright">© 2024 VOICE AGENT PLATFORM — ALL RIGHTS RESERVED.</span>
-          </div>
-        </div>
-      </footer>
+      {/* Pricing section end */}
     </div>
   );
 };

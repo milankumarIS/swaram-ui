@@ -1,6 +1,6 @@
 // src/pages/Embed/EmbedPage.tsx
 import { useState, useRef, useEffect, useCallback } from "react";
-import { useSearchParams, useParams } from "react-router-dom";
+import { useSearchParams, useParams, Link } from "react-router-dom";
 import {
   Room,
   RoomEvent,
@@ -189,6 +189,9 @@ const EmbedPage = () => {
         <div className="embed-welcome">
           <div className="embed-logo-container">
             <Terminal size={40} color="var(--accent)" />
+          </div>
+          <div className="embed-footer-brand">
+            Powered by <Link to="/" target="_blank">Swaram</Link>
           </div>
           <h1 className="embed-agent-name">Session Ended</h1>
           <p className="embed-welcome-msg">The signal has been cleanly terminated.</p>

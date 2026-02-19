@@ -2,11 +2,12 @@
 
 .sidebar {
   width: 240px;
-  min-height: 100vh;
+  min-height: calc(100vh - 64px);
   background-color: var(--bg-surface);
   border-right: 1px solid var(--border-dim);
   display: flex;
   flex-direction: column;
+  border-radius: 8px 0px 0px 0px;
 }
 
 .sidebar-header {
