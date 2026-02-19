@@ -1,11 +1,12 @@
 // src/pages/Agents/CreateAgentPage.tsx
 import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
-import { useForm } from "react-hook-form";
+import { useForm, useWatch } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import Layout from "../../components/layout/Layout";
 import { createAgent } from "../../services/services";
+import { Mic, ArrowRight, ArrowLeft, Headphones } from "lucide-react";
 import "./CreateAgentPage.css";
 
 const schema = z.object({
@@ -24,16 +25,15 @@ const schema = z.object({
 
 type FormData = z.infer<typeof schema>;
 
-const LLM_MODELS  = ["gemini-2.5-flash", "gemini-2.0-flash", "gemini-1.5-pro"];
+const LLM_MODELS  = ["gemini-2.0-flash", "gemini-1.5-pro"];
 const LANG_CODES  = ["en-IN", "hi-IN", "ta-IN", "te-IN", "kn-IN", "bn-IN", "mr-IN"];
 const TTS_VOICES  = ["meera", "anushka", "riya", "kairav", "arjun", "sonia"];
 
 const steps = [
-  { id: 1, label: "Name & Identity" },
-  { id: 2, label: "Personality" },
-  { id: 3, label: "AI Config" },
-  { id: 4, label: "Voice & Language" },
-  { id: 5, label: "Security" },
+  { id: 1, label: "Identity" },
+  { id: 2, label: "Voice" },
+  { id: 3, label: "Intelligence" },
+  { id: 4, label: "Security" },
 ];
 
 const CreateAgentPage = () => {
@@ -42,10 +42,10 @@ const CreateAgentPage = () => {
   const [apiError, setApiError] = useState("");
   const [loading, setLoading] = useState(false);
 
-  const form = useForm<FormData>({
+  const { register, handleSubmit, trigger, control, formState: { errors } } = useForm<FormData>({
     resolver: zodResolver(schema),
     defaultValues: {
-      llm_model: "gemini-2.5-flash",
+      llm_model: "gemini-2.0-flash",
       stt_language_code: "en-IN",
       tts_voice: "meera",
       tts_language_code: "en-IN",
@@ -54,16 +54,17 @@ const CreateAgentPage = () => {
     },
   });
 
-  const { register, handleSubmit, trigger, formState: { errors } } = form;
+  const agentName = useWatch({ control, name: "name", defaultValue: "My Agent" });
+  const ttsVoice = useWatch({ control, name: "tts_voice", defaultValue: "meera" });
 
   const nextStep = async () => {
-    let valid = false;
-    if (step === 1) valid = await trigger(["name"]);
-    else if (step === 2) valid = await trigger(["system_prompt", "welcome_message"]);
-    else if (step === 3) valid = await trigger(["llm_model", "llm_api_key"]);
-    else if (step === 4) valid = await trigger(["sarvam_api_key", "stt_language_code", "tts_voice"]);
-    else valid = true;
-    if (valid) setStep((s) => Math.min(s + 1, steps.length));
+    let fields: (keyof FormData)[] = [];
+    if (step === 1) fields = ["name", "system_prompt", "welcome_message"];
+    else if (step === 2) fields = ["stt_language_code", "tts_voice"];
+    else if (step === 3) fields = ["llm_model", "llm_api_key", "sarvam_api_key"];
+    
+    const isValid = await trigger(fields);
+    if (isValid) setStep((s) => Math.min(s + 1, steps.length));
   };
 
   const onSubmit = async (data: FormData) => {
@@ -85,162 +86,190 @@ const CreateAgentPage = () => {
   return (
     <Layout>
       <div className="create-agent">
-        <div className="create-agent-header">
-          <Link to="/dashboard" className="back-link">← Dashboard</Link>
-          <h1 className="create-agent-title">Create Voice Agent</h1>
-          <p style={{ color: "var(--text-secondary)", fontSize: "0.9rem" }}>
-            Step {step} of {steps.length} — {steps[step - 1].label}
-          </p>
-        </div>
+        <header className="create-agent-header">
+          <Link to="/dashboard" className="back-link">
+            <ArrowLeft size={14} /> Back to Dashboard
+          </Link>
+          <h1 className="create-agent-title">New Voice Agent</h1>
+        </header>
 
-        {/* Step progress bar */}
-        <div className="steps-progress">
-          {steps.map((s) => (
-            <div key={s.id} className={`step-dot ${s.id <= step ? "active" : ""} ${s.id < step ? "done" : ""}`}>
-              {s.id < step ? "✓" : s.id}
+        <div className="builder-split">
+          {/* Left: Form */}
+          <div className="builder-main">
+            <nav className="steps-nav">
+              {steps.map((s) => (
+                <div
+                  key={s.id}
+                  className={`step-nav-item ${step === s.id ? "active" : ""}`}
+                  onClick={() => step > s.id && setStep(s.id)}
+                >
+                  {s.id}. {s.label}
+                </div>
+              ))}
+            </nav>
+
+            <form onSubmit={handleSubmit(onSubmit)}>
+              <div className="ca-panel">
+                {apiError && <div className="ca-error-banner">{apiError}</div>}
+
+                {step === 1 && (
+                  <div className="form-step animate-in">
+                    <header className="form-header">
+                      <h2 className="form-step-title">Agent Identity</h2>
+                    </header>
+                    <div className="form-group">
+                      <label className="label">Display Name</label>
+                      <input className="input" placeholder="e.g. Support Specialist" {...register("name")} />
+                      {errors.name && <span className="error-text">{errors.name.message}</span>}
+                    </div>
+                    <div className="form-group">
+                      <label className="label">System Instructions</label>
+                      <textarea
+                        className="input"
+                        rows={6}
+                        placeholder="Define the behavior, personality, and knowledge of your agent..."
+                        {...register("system_prompt")}
+                      />
+                      {errors.system_prompt && <span className="error-text">{errors.system_prompt.message}</span>}
+                    </div>
+                    <div className="form-group">
+                      <label className="label">Welcome Message</label>
+                      <input className="input" placeholder="What the agent says first..." {...register("welcome_message")} />
+                    </div>
+                  </div>
+                )}
+
+                {step === 2 && (
+                  <div className="form-step animate-in">
+                    <header className="form-header">
+                      <h2 className="form-step-title">Voice & Language</h2>
+                    </header>
+                    <div className="form-row">
+                      <div className="form-group">
+                        <label className="label">Input Language (STT)</label>
+                        <select className="input" {...register("stt_language_code")}>
+                          {LANG_CODES.map((l) => <option key={l} value={l}>{l}</option>)}
+                        </select>
+                      </div>
+                      <div className="form-group">
+                        <label className="label">Output Language (TTS)</label>
+                        <select className="input" {...register("tts_language_code")}>
+                          {LANG_CODES.map((l) => <option key={l} value={l}>{l}</option>)}
+                        </select>
+                      </div>
+                    </div>
+                    <div className="form-group">
+                      <label className="label">Voice Avatar</label>
+                      <select className="input" {...register("tts_voice")}>
+                        {TTS_VOICES.map((v) => <option key={v} value={v}>{v}</option>)}
+                      </select>
+                      <span className="form-hint">Sarvam AI high-fidelity neural voices.</span>
+                    </div>
+                  </div>
+                )}
+
+                {step === 3 && (
+                  <div className="form-step animate-in">
+                    <header className="form-header">
+                      <p className="wizard-subtitle">Design the intelligence and personality of your Swaram agent.</p>
+                    </header>
+                    <div className="form-group">
+                      <label className="label">Large Language Model</label>
+                      <select className="input" {...register("llm_model")}>
+                        {LLM_MODELS.map((m) => <option key={m} value={m}>{m}</option>)}
+                      </select>
+                    </div>
+                    <div className="form-group">
+                      <label className="label">Gemini API Key</label>
+                      <input className="input" type="password" placeholder="AIzaSy..." {...register("llm_api_key")} />
+                    </div>
+                    <div className="form-group">
+                      <label className="label">Sarvam API Key</label>
+                      <input className="input" type="password" placeholder="sk-..." {...register("sarvam_api_key")} />
+                    </div>
+                  </div>
+                )}
+
+                {step === 4 && (
+                  <div className="form-step animate-in">
+                    <header className="form-header">
+                      <h2 className="form-step-title">Security & Limits</h2>
+                    </header>
+                    <div className="form-group">
+                      <label className="label">Max Call Duration (Seconds)</label>
+                      <input className="input" type="number" {...register("max_call_duration_sec", { valueAsNumber: true })} />
+                    </div>
+                    <div className="form-group">
+                      <label className="label">Allowed Domains</label>
+                      <input className="input" placeholder="domain.com, sub.domain.com" {...register("allowed_domains")} />
+                      <span className="form-hint">Comma separated. Empty allows all domains.</span>
+                    </div>
+                    <div className="ca-summary">
+                      <h3>Ready to deploy.</h3>
+                      <p>Once created, you'll receive an embed code to place your agent on any website.</p>
+                    </div>
+                  </div>
+                )}
+              </div>
+
+              <div className="ca-actions">
+                <button
+                  type="button"
+                  className="btn-ghost"
+                  disabled={step === 1}
+                  onClick={() => setStep((s) => s - 1)}
+                >
+                  Back
+                </button>
+                {step < steps.length ? (
+                  <button type="button" className="btn-primary" onClick={nextStep} style={{display:'flex', gap:'4px'}}>
+                    Continue <ArrowRight size={16} />
+                  </button>
+                ) : (
+                  <button type="submit" className="btn-primary" disabled={loading}>
+                    {loading ? "Creating..." : "Deploy Agent"}
+                  </button>
+                )}
+              </div>
+            </form>
+          </div>
+
+          {/* Right: Live Preview */}
+          <div className="builder-sidebar">
+            <div className="preview-sticky">
+              <div className="preview-card">
+                <span className="preview-label">Live Preview</span>
+                
+                <div className="preview-voice-orb">
+                  <div className="preview-orb-inner"></div>
+                  <Mic size={32} className="preview-orb-mic" />
+                </div>
+
+                <span className="preview-agent-name">{agentName}</span>
+                <span className="preview-agent-status">Ready to speak</span>
+
+                <div className="preview-waveform-mock">
+                  {[...Array(12)].map((_, i) => (
+                    <div 
+                      key={i} 
+                      className="mock-bar" 
+                      style={{ 
+                        height: `${Math.random() * 20 + 10}px`,
+                        animationDelay: `${i * 0.1}s`
+                      }}
+                    ></div>
+                  ))}
+                </div>
+
+                <div style={{ marginTop: "40px" }}>
+                  <button className="btn-ghost" style={{ width: "fit-content", gap: "12px" , display:'flex'}}>
+                    <Headphones size={16} /> Test Voice: {ttsVoice}
+                  </button>
+                </div>
+              </div>
             </div>
-          ))}
+          </div>
         </div>
-
-        {apiError && (
-          <div className="ca-error-banner">{apiError}</div>
-        )}
-
-        <form className="create-agent-form" onSubmit={handleSubmit(onSubmit)}>
-          <div className="ca-panel">
-            {/* STEP 1 — Name */}
-            {step === 1 && (
-              <>
-                <div className="form-group">
-                  <label className="form-label">Agent Name *</label>
-                  <input className="form-input" placeholder='e.g. "Customer Support Bot"' {...register("name")} />
-                  {errors.name && <span className="form-error">{errors.name.message}</span>}
-                </div>
-              </>
-            )}
-
-            {/* STEP 2 — Personality */}
-            {step === 2 && (
-              <>
-                <div className="form-group">
-                  <label className="form-label">System Prompt *</label>
-                  <textarea
-                    className="form-input"
-                    rows={6}
-                    placeholder="You are a helpful customer support agent for Acme Corp. Be friendly, concise, and professional..."
-                    {...register("system_prompt")}
-                    style={{ resize: "vertical" }}
-                  />
-                  {errors.system_prompt && <span className="form-error">{errors.system_prompt.message}</span>}
-                </div>
-                <div className="form-group">
-                  <label className="form-label">Welcome Message *</label>
-                  <input className="form-input" placeholder='e.g. "Hi! How can I help you today?"' {...register("welcome_message")} />
-                  {errors.welcome_message && <span className="form-error">{errors.welcome_message.message}</span>}
-                </div>
-              </>
-            )}
-
-            {/* STEP 3 — AI Config */}
-            {step === 3 && (
-              <>
-                <div className="form-group">
-                  <label className="form-label">LLM Model</label>
-                  <select className="form-input" {...register("llm_model")}>
-                    {LLM_MODELS.map((m) => <option key={m} value={m}>{m}</option>)}
-                  </select>
-                </div>
-                <div className="form-group">
-                  <label className="form-label">Google Gemini API Key *</label>
-                  <input className="form-input" type="password" placeholder="AIzaSy..." {...register("llm_api_key")} />
-                  <span className="form-hint">Encrypted with AES-256-GCM before storage.</span>
-                  {errors.llm_api_key && <span className="form-error">{errors.llm_api_key.message}</span>}
-                </div>
-              </>
-            )}
-
-            {/* STEP 4 — Voice & Language */}
-            {step === 4 && (
-              <>
-                <div className="form-group">
-                  <label className="form-label">Sarvam AI API Key *</label>
-                  <input className="form-input" type="password" placeholder="sk-..." {...register("sarvam_api_key")} />
-                  <span className="form-hint">Used for STT (speech-to-text) and TTS (text-to-speech).</span>
-                  {errors.sarvam_api_key && <span className="form-error">{errors.sarvam_api_key.message}</span>}
-                </div>
-                <div className="form-row">
-                  <div className="form-group">
-                    <label className="form-label">STT Language</label>
-                    <select className="form-input" {...register("stt_language_code")}>
-                      {LANG_CODES.map((l) => <option key={l} value={l}>{l}</option>)}
-                    </select>
-                  </div>
-                  <div className="form-group">
-                    <label className="form-label">TTS Language</label>
-                    <select className="form-input" {...register("tts_language_code")}>
-                      {LANG_CODES.map((l) => <option key={l} value={l}>{l}</option>)}
-                    </select>
-                  </div>
-                </div>
-                <div className="form-group">
-                  <label className="form-label">TTS Voice</label>
-                  <select className="form-input" {...register("tts_voice")}>
-                    {TTS_VOICES.map((v) => <option key={v} value={v}>{v}</option>)}
-                  </select>
-                </div>
-                <div className="form-group">
-                  <label className="form-label">Max Call Duration (seconds)</label>
-                  <input
-                    className="form-input"
-                    type="number"
-                    min={30}
-                    max={1800}
-                    {...register("max_call_duration_sec", { valueAsNumber: true })}
-                  />
-                </div>
-              </>
-            )}
-
-            {/* STEP 5 — Security */}
-            {step === 5 && (
-              <>
-                <div className="form-group">
-                  <label className="form-label">Allowed Domains (optional)</label>
-                  <input
-                    className="form-input"
-                    placeholder="mywebsite.com, app.mywebsite.com"
-                    {...register("allowed_domains")}
-                  />
-                  <span className="form-hint">
-                    Comma-separated domains. Leave empty to allow all origins (development only).
-                  </span>
-                </div>
-                <div className="ca-summary">
-                  <h3>Ready to create your agent!</h3>
-                  <p>Your agent will be created with the settings you configured. You can edit it anytime from the dashboard.</p>
-                </div>
-              </>
-            )}
-          </div>
-
-          {/* Navigation buttons */}
-          <div className="ca-actions">
-            {step > 1 && (
-              <button type="button" className="btn-ghost" onClick={() => setStep((s) => s - 1)}>
-                ← Back
-              </button>
-            )}
-            {step < steps.length ? (
-              <button type="button" className="btn-primary" onClick={nextStep}>
-                Continue →
-              </button>
-            ) : (
-              <button type="submit" className="btn-primary" disabled={loading}>
-                {loading ? "Creating…" : "Create Agent 🎙️"}
-              </button>
-            )}
-          </div>
-        </form>
       </div>
     </Layout>
   );

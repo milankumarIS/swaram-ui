@@ -1,17 +1,26 @@
 /* src/components/layout/Layout.css */
-.layout {
+
+.layout-container {
+  display: grid;
+  grid-template-columns: 240px 1fr;
   min-height: 100vh;
-  display: flex;
-  flex-direction: column;
+  padding-top: 64px;
+  background: var(--bg-void);
+  border-radius: 8px 8px 0px 0px;
 }
 
-.layout-main {
-  flex: 1;
-  margin-top: 64px; /* header height */
-  padding: 2rem 1.5rem;
-  max-width: 1200px;
-  width: 100%;
-  margin-left: auto;
-  margin-right: auto;
-  margin-top: calc(64px + 2rem);
+.layout-content {
+  background-color: var(--bg-void);
+  padding: 48px 64px;
+  overflow-y: auto;
+  border-radius: 8px;
+}
+
+@media (max-width: 1024px) {
+  .layout-container {
+    grid-template-columns: 1fr;
+  }
+  .layout-content {
+    padding: 32px 24px;
+  }
 }
