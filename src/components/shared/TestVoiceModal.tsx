@@ -9,7 +9,7 @@ import "./TestVoiceModal.css";
 interface TestVoiceModalProps {
   isOpen: boolean;
   onClose: () => void;
-  agentConfig: Partial<CreateAgentPayload>;
+  agentConfig: CreateAgentPayload;
 }
 
 const TestVoiceModal = ({
@@ -36,9 +36,7 @@ const TestVoiceModal = ({
         setError("");
 
         // Create preview agent with current form data
-        const response = await createPreviewAgent(
-          agentConfig as CreateAgentPayload,
-        );
+        const response = await createPreviewAgent(agentConfig);
         const { embedUrl: url } = response.data;
 
         setEmbedUrl(url);

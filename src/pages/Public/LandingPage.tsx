@@ -52,9 +52,9 @@ const LandingPage = () => {
             </div>
             <div className="preview-embed-container">
               <iframe
-                src="https://swaram.varsaka.com/embed/swaram-demo?token=DEMO_TOKEN_HERE"
+                src="https://swaram.varsaka.com/embed/ai-assistant-aEYFhW?token=7e5aa592-f2fc-49b3-b858-d6f75974ac19"
                 width="100%"
-                height="650"
+                height="450"
                 allow="microphone"
                 style={{
                   border: "none",
@@ -66,8 +66,7 @@ const LandingPage = () => {
               />
             </div>
             <p className="preview-note">
-              🎤 Click "Start Conversation" and ask about features, pricing, or
-              how Swaram works!
+              start a conversation and ask it anything
             </p>
           </div>
         </div>

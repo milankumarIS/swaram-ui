@@ -1,13 +1,17 @@
 /* src/index.css — Main entry stylesheet, imports all design tokens */
-@import './theme/variables.css';
-@import './styles/global.css';
+@import "./theme/variables.css";
+@import "./styles/global.css";
 
 html {
   scroll-behavior: smooth;
 }
 
 body {
-  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  font-family:
+    "Inter",
+    system-ui,
+    -apple-system,
+    sans-serif;
   background-color: var(--bg-primary);
   color: var(--text-primary);
   line-height: 1.5;

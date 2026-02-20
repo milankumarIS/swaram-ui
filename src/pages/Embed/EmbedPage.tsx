@@ -118,7 +118,16 @@ const EmbedPage = () => {
 
       await room.connect(data.livekitUrl, data.livekitToken);
     } catch (err: any) {
-      setError("Failed to establish signal.");
+      let errorMessage = "Failed to establish connection.";
+
+      // Extract specific error message from API response
+      if (err.response?.data?.error) {
+        errorMessage = err.response.data.error;
+      } else if (err.message) {
+        errorMessage = err.message;
+      }
+
+      setError(errorMessage);
       setPhase("welcome");
     }
   }, [embedToken, slug]);
@@ -161,7 +170,7 @@ const EmbedPage = () => {
             onClick={startCall}
             disabled={phase === "connecting"}
           >
-            {phase === "connecting" ? "Establishing..." : "Start Signal"}{" "}
+            {phase === "connecting" ? "Establishing..." : "START SIGNAL"}{" "}
             <ArrowRight size={14} />
           </button>
         </div>
