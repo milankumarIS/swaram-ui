@@ -369,6 +369,16 @@
   margin-bottom: 64px;
 }
 
+.section-description {
+  font-family: var(--font-body);
+  font-size: 18px;
+  color: var(--text-secondary);
+  line-height: 1.6;
+  max-width: 600px;
+  margin-top: -48px;
+  margin-bottom: 64px;
+}
+
 .bento-grid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
@@ -680,6 +690,12 @@
     grid-template-columns: 1fr;
     grid-template-rows: auto;
     gap: 16px;
+  }
+
+  .wide-feature {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 24px;
   }
 
   .bento-item {

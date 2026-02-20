@@ -72,7 +72,6 @@ const AppContent = () => {
           <Route path="/terms"     element={<PageWrapper><TermsPage /></PageWrapper>} />
           <Route path="/privacy"   element={<PageWrapper><PrivacyPage /></PageWrapper>} />
           <Route path="/security"  element={<PageWrapper><SecurityPage /></PageWrapper>} />
-          <Route path="/contact"   element={<PageWrapper><ContactPage /></PageWrapper>} />
 
           {/* ── Embed widget (public, no auth) ── */}
           <Route path="/embed/:slug" element={<EmbedPage />} />
@@ -98,6 +97,9 @@ const AppContent = () => {
           } />
           <Route path="/analytics" element={
             <ProtectedRoute><AnalyticsPage /></ProtectedRoute>
+          } />
+          <Route path="/contact" element={
+            <ProtectedRoute><ContactPage /></ProtectedRoute>
           } />
           <Route path="/settings" element={
             <ProtectedRoute>

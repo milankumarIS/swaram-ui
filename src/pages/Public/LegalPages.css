@@ -80,6 +80,10 @@
   border: 1px solid var(--border-dim);
   border-radius: var(--radius-card);
   padding: 24px;
+  text-align: center;
+  align-items: center;
+  display: flex;
+  flex-direction: column;
 }
 
 .legal-icon {
