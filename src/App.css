@@ -1,5 +1,5 @@
 #root {
-  max-width: 1400px;
+  /* max-width: 1400px; */
   margin: 0 auto;
   padding: 1rem;
   /* padding-top: 1rem; */
@@ -22,7 +22,7 @@
   /* Default: Somewhere in the middle */
   top: -1rem;
   height: calc(100vh + 2rem);
-  max-width: 1248px;
+  /* max-width: 1400px; */
 }
 
 .landing-cover[data-at-top="true"] {
