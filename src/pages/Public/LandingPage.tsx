@@ -47,27 +47,28 @@ const LandingPage = () => {
           </div>
 
           <div className="hero-preview">
-            <div className="preview-window">
-              <div className="preview-header">
-                <div className="url">swaram.io/preview</div>
-                <span>Swaram Portfolio Assistant</span>
-              </div>
-              <div className="preview-body">
-                <div className="waveform">
-                  <div className="waveform-bar"></div>
-                  <div className="waveform-bar"></div>
-                  <div className="waveform-bar"></div>
-                  <div className="waveform-bar"></div>
-                  <div className="waveform-bar"></div>
-                </div>
-                <p className="preview-caption">
-                  "Hello! How can I help you today?"
-                </p>
-              </div>
-              <div className="preview-footer">
-                <div className="preview-btn">Start Conversation</div>
-              </div>
+            <div className="preview-label">
+              Try it live — Talk to our platform assistant
             </div>
+            <div className="preview-embed-container">
+              <iframe
+                src="https://swaram.varsaka.com/embed/swaram-demo?token=DEMO_TOKEN_HERE"
+                width="100%"
+                height="650"
+                allow="microphone"
+                style={{
+                  border: "none",
+                  borderRadius: "16px",
+                  background: "var(--bg-card)",
+                  boxShadow: "0 20px 60px rgba(0, 0, 0, 0.4)",
+                }}
+                title="Swaram Platform Demo"
+              />
+            </div>
+            <p className="preview-note">
+              🎤 Click "Start Conversation" and ask about features, pricing, or
+              how Swaram works!
+            </p>
           </div>
         </div>
       </motion.section>

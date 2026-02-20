@@ -9,21 +9,23 @@ export const register = (email: string, password: string) =>
 export const login = (email: string, password: string) =>
   axiosClient.post("/api/auth/login", { email, password });
 
-export const getMe = () =>
-  axiosClient.get("/api/auth/me");
+export const getMe = () => axiosClient.get("/api/auth/me");
 
 // ─── Agents ───────────────────────────────────────────────────────────────────
-export const getAgents = () =>
-  axiosClient.get("/api/agents");
+export const getAgents = () => axiosClient.get("/api/agents");
 
-export const getAgent = (id: string) =>
-  axiosClient.get(`/api/agents/${id}`);
+export const getAgent = (id: string) => axiosClient.get(`/api/agents/${id}`);
 
 export const createAgent = (data: CreateAgentPayload) =>
   axiosClient.post("/api/agents", data);
 
-export const updateAgent = (id: string, data: Partial<CreateAgentPayload> & { is_active?: boolean }) =>
-  axiosClient.patch(`/api/agents/${id}`, data);
+export const createPreviewAgent = (data: CreateAgentPayload) =>
+  axiosClient.post("/api/agents/preview", data);
+
+export const updateAgent = (
+  id: string,
+  data: Partial<CreateAgentPayload> & { is_active?: boolean },
+) => axiosClient.patch(`/api/agents/${id}`, data);
 
 export const deleteAgent = (id: string) =>
   axiosClient.delete(`/api/agents/${id}`);
@@ -38,3 +40,6 @@ export const getSession = (sessionId: string) =>
 // ─── Embed ────────────────────────────────────────────────────────────────────
 export const getEmbedToken = (embedToken: string) =>
   axiosClient.post("/api/embed/token", { embed_token: embedToken });
+
+// ─── Dashboard ────────────────────────────────────────────────────────────────
+export const getDashboardStats = () => axiosClient.get("/api/dashboard/stats");

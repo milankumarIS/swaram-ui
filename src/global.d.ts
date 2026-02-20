@@ -23,6 +23,7 @@ export interface Agent {
   allowed_domains: string[];
   embed_token: string;
   is_active: boolean;
+  session_count_30d?: number;
   created_at?: string;
   updated_at?: string;
 }
