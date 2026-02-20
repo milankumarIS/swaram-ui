@@ -153,18 +153,16 @@ const SecurityPage = () => {
           >
             Questions about security? Email us at{" "}
             <a
-              href="mailto:security@swaram.io"
+              href="mailto:info@varsaka.com"
               style={{ color: "var(--accent)", textDecoration: "underline" }}
             >
-              security@swaram.io
+              info@varsaka.com
             </a>
             . We'll respond within 24 hours.
           </p>
         </section>
 
-        <footer className="legal-footer">
-          <p>© 2024 SWARAM</p>
-        </footer>
+    
       </div>
     </div>
   );

@@ -60,9 +60,7 @@ const PrivacyPage = () => {
           </p>
         </section>
 
-        <footer className="legal-footer">
-          <p>© 2024 SWARAM</p>
-        </footer>
+    
       </div>
     </div>
   );

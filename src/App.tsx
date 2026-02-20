@@ -73,154 +73,50 @@ const AppContent = () => {
       <AnimatePresence mode="wait">
         <Routes location={location} key={location.pathname}>
           {/* ── Public ── */}
-          <Route
-            path="/"
-            element={
-              <PageWrapper>
-                <LandingPage />
-              </PageWrapper>
-            }
-          />
-          <Route
-            path="/login"
-            element={
-              <PageWrapper>
-                <LoginPage />
-              </PageWrapper>
-            }
-          />
-          <Route
-            path="/register"
-            element={
-              <PageWrapper>
-                <RegisterPage />
-              </PageWrapper>
-            }
-          />
-          <Route
-            path="/about"
-            element={
-              <PageWrapper>
-                <AboutPage />
-              </PageWrapper>
-            }
-          />
-          <Route
-            path="/terms"
-            element={
-              <PageWrapper>
-                <TermsPage />
-              </PageWrapper>
-            }
-          />
-          <Route
-            path="/privacy"
-            element={
-              <PageWrapper>
-                <PrivacyPage />
-              </PageWrapper>
-            }
-          />
-          <Route
-            path="/security"
-            element={
-              <PageWrapper>
-                <SecurityPage />
-              </PageWrapper>
-            }
-          />
-          <Route
-            path="/contact"
-            element={
-              <PageWrapper>
-                <ContactPage />
-              </PageWrapper>
-            }
-          />
+          <Route path="/"          element={<PageWrapper><LandingPage /></PageWrapper>} />
+          <Route path="/login"     element={<PageWrapper><LoginPage /></PageWrapper>} />
+          <Route path="/register"  element={<PageWrapper><RegisterPage /></PageWrapper>} />
+          <Route path="/about"     element={<PageWrapper><AboutPage /></PageWrapper>} />
+          <Route path="/terms"     element={<PageWrapper><TermsPage /></PageWrapper>} />
+          <Route path="/privacy"   element={<PageWrapper><PrivacyPage /></PageWrapper>} />
+          <Route path="/security"  element={<PageWrapper><SecurityPage /></PageWrapper>} />
 
           {/* ── Embed widget (public, no auth) ── */}
           <Route path="/embed/:slug" element={<EmbedPage />} />
 
           {/* ── Protected dashboard routes ── */}
-          <Route
-            path="/dashboard"
-            element={
-              <ProtectedRoute>
-                <DashboardPage />
-              </ProtectedRoute>
-            }
-          />
-          <Route
-            path="/profile"
-            element={
-              <ProtectedRoute>
-                <ProfilePage />
-              </ProtectedRoute>
-            }
-          />
-          <Route
-            path="/agents/new"
-            element={
-              <ProtectedRoute>
-                <CreateAgentPage />
-              </ProtectedRoute>
-            }
-          />
-          <Route
-            path="/agents/:slug"
-            element={
-              <ProtectedRoute>
-                <AgentDetailPage />
-              </ProtectedRoute>
-            }
-          />
-          <Route
-            path="/agents/:slug/edit"
-            element={
-              <ProtectedRoute>
-                <EditAgentPage />
-              </ProtectedRoute>
-            }
-          />
-          <Route
-            path="/sessions"
-            element={
-              <ProtectedRoute>
-                <SessionsPage />
-              </ProtectedRoute>
-            }
-          />
-          <Route
-            path="/analytics"
-            element={
-              <ProtectedRoute>
-                <AnalyticsPage />
-              </ProtectedRoute>
-            }
-          />
-          <Route
-            path="/settings"
-            element={
-              <ProtectedRoute>
-                <div
-                  style={{ color: "var(--text-secondary)", padding: "48px" }}
-                >
-                  <h1
-                    style={{
-                      fontFamily: "var(--font-display)",
-                      color: "var(--text-primary)",
-                      marginBottom: "16px",
-                    }}
-                  >
-                    Settings
-                  </h1>
-                  <p>
-                    Global account and organization preferences coming soon.
-                  </p>
-                </div>
-              </ProtectedRoute>
-            }
-          />
+          <Route path="/dashboard" element={
+            <ProtectedRoute><DashboardPage /></ProtectedRoute>
+          } />
+          <Route path="/profile" element={
+            <ProtectedRoute><ProfilePage /></ProtectedRoute>
+          } />
+          <Route path="/agents/new" element={
+            <ProtectedRoute><CreateAgentPage /></ProtectedRoute>
+          } />
+          <Route path="/agents/:slug" element={
+            <ProtectedRoute><AgentDetailPage /></ProtectedRoute>
+          } />
+          <Route path="/agents/:slug/edit" element={
+            <ProtectedRoute><EditAgentPage /></ProtectedRoute>
+          } />
+          <Route path="/sessions" element={
+            <ProtectedRoute><SessionsPage /></ProtectedRoute>
+          } />
+          <Route path="/analytics" element={
+            <ProtectedRoute><AnalyticsPage /></ProtectedRoute>
+          } />
+          <Route path="/contact" element={
+            <ProtectedRoute><ContactPage /></ProtectedRoute>
+          } />
+          <Route path="/settings" element={
+            <ProtectedRoute>
+              <div style={{ color: "var(--text-secondary)", padding: "48px" }}>
+                <h1 style={{ fontFamily: "var(--font-display)", color: "var(--text-primary)", marginBottom: "16px" }}>Settings</h1>
+                <p>Global account and organization preferences coming soon.</p>
+              </div>
+            </ProtectedRoute>
+          } />
 
           {/* ── 404 ── */}
           <Route

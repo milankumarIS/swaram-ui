@@ -1,28 +1,37 @@
 // src/components/layout/Sidebar.tsx
-import { Link, useLocation } from "react-router-dom";
-import { useAuth } from "../context/AuthContext";
 import {
   BarChart2,
   LayoutDashboard,
-  MessageSquare,
   LogOut,
+  MessageSquare,
+  Settings,
   User,
   HelpCircle
 } from "lucide-react";
+import { Link, useLocation } from "react-router-dom";
+import { useAuth } from "../context/AuthContext";
 import "./Sidebar.css";
+
+interface NavItem {
+  icon: React.ReactNode;
+  label: string;
+  path: string;
+  external?: boolean;
+}
 
 const Sidebar = () => {
   const { user, logout } = useAuth();
   const location = useLocation();
 
-  const navItems = [
+  const navItems: NavItem[] = [
     { icon: <LayoutDashboard size={18} />, label: "Dashboard", path: "/dashboard" },
     // { icon: <Users size={18} />, label: "My Agents", path: "/dashboard" }, // In this simple version, same as dashboard
     { icon: <MessageSquare size={18} />, label: "Sessions", path: "/sessions" },
     { icon: <BarChart2 size={18} />, label: "Analytics", path: "/analytics" },
-    { icon: <User size={18} />, label: "Profile", path: "/profile" },
+    { icon: <User size={18} />, label: "Profile", path: "/profile",external:false },
     // { icon: <Settings size={18} />, label: "Settings", path: "/settings" },
-    { icon: <HelpCircle size={18} />, label: "Documentation", path: "https://github.com", external: true },
+    { icon: <HelpCircle size={18} />, label: "Contact Us", path: "/contact" },
+    // { icon: <HelpCircle size={18} />, label: "Documentation", path: "https://github.com", external: true },
   ];
 
   return (
@@ -31,7 +40,7 @@ const Sidebar = () => {
 
       <nav className="sidebar-nav" style={{marginTop:'2rem'}}>
         {navItems.map((item) => (
-          item.external ? (
+          item?.external ? (
             <a
               key={item.label}
               href={item.path}

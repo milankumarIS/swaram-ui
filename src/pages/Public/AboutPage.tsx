@@ -95,7 +95,7 @@ const AboutPage = () => {
         <section className="legal-section">
           <h2 className="section-heading">04 WHAT'S NEXT</h2>
           <div className="future-card">
-            <h3>🚀 Our Own Voice Engine (Coming Soon)</h3>
+            <h3> Our Own Voice Engine (Coming Soon)</h3>
             <p>
               We're building proprietary STT and TTS engines optimized
               specifically for conversational AI. This will deliver:
@@ -118,9 +118,7 @@ const AboutPage = () => {
           </div>
         </section>
 
-        <footer className="legal-footer">
-          <p>© 2024 SWARAM</p>
-        </footer>
+     
       </div>
     </div>
   );

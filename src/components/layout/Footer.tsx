@@ -18,14 +18,14 @@ const Footer = () => {
           <div className="footer-links">
             <div className="footer-link-group">
               <span className="footer-label">Product</span>
+              <Link to="/profile" className="footer-link">
+                Profile
+              </Link>
               <Link to="/about" className="footer-link">
                 About Us
               </Link>
               <Link to="/dashboard" className="footer-link">
                 Dashboard
-              </Link>
-              <Link to="/profile" className="footer-link">
-                Profile
               </Link>
               {/* <a href="https://github.com" target="_blank" rel="noopener noreferrer" className="footer-link">Documentation</a> */}
             </div>
@@ -57,18 +57,16 @@ const Footer = () => {
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                Varsaka Pvt Ltd ❤️
+                Varsaka Pvt Ltd{" "}
               </a>
             </span>
           </div>
-          <div className="footer-socials">
-            <Link to="/contact" className="footer-social-link">
-              Contact Us
-            </Link>
-            {/* <a href="#" className="footer-social-link">X (Twitter)</a>
+          {/* <div className="footer-socials">
+            <Link to="/contact" className="footer-social-link">Contact Us</Link>
+            <a href="#" className="footer-social-link">X (Twitter)</a>
             <a href="#" className="footer-social-link">GitHub</a>
-            <a href="#" className="footer-social-link">LinkedIn</a> */}
-          </div>
+            <a href="#" className="footer-social-link">LinkedIn</a>
+          </div> */}
         </div>
       </div>
     </footer>
