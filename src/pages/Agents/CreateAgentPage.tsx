@@ -7,6 +7,7 @@ import { z } from "zod";
 import Layout from "../../components/layout/Layout";
 import TestVoiceModal from "../../components/shared/TestVoiceModal";
 import { createAgent } from "../../services/services";
+import type { CreateAgentPayload } from "../../global";
 import { Mic, ArrowRight, ArrowLeft, Headphones } from "lucide-react";
 import "./CreateAgentPage.css";
 
@@ -110,6 +111,7 @@ const CreateAgentPage = () => {
     else if (step === 2) fields = ["stt_language_code", "tts_voice"];
     else if (step === 3)
       fields = ["llm_model", "llm_api_key", "sarvam_api_key"];
+    else if (step === 4) fields = ["max_call_duration_sec"]; // Validate step 4 fields
 
     const isValid = await trigger(fields);
     if (isValid) setStep((s) => Math.min(s + 1, steps.length));
@@ -132,6 +134,21 @@ const CreateAgentPage = () => {
     } finally {
       setLoading(false);
     }
+  };
+
+  // Helper function to transform form data for preview
+  const getPreviewConfig = (): CreateAgentPayload => {
+    const values = getValues();
+    const allowedDomains = values.allowed_domains
+      ? values.allowed_domains
+          .split(",")
+          .map((d) => d.trim())
+          .filter(Boolean)
+      : [];
+    return {
+      ...values,
+      allowed_domains: allowedDomains,
+    };
   };
 
   return (
@@ -159,7 +176,19 @@ const CreateAgentPage = () => {
               ))}
             </nav>
 
-            <form onSubmit={handleSubmit(onSubmit)}>
+            <form
+              onSubmit={handleSubmit(onSubmit)}
+              onKeyDown={(e) => {
+                // Prevent Enter key from submitting form - only button click should submit
+                if (e.key === "Enter") {
+                  e.preventDefault();
+                  // Move to next step if not on last step
+                  if (step < steps.length) {
+                    nextStep();
+                  }
+                }
+              }}
+            >
               <div className="ca-panel">
                 {apiError && <div className="ca-error-banner">{apiError}</div>}
 
@@ -497,7 +526,7 @@ const CreateAgentPage = () => {
       <TestVoiceModal
         isOpen={showTestModal}
         onClose={() => setShowTestModal(false)}
-        agentConfig={getValues()}
+        agentConfig={getPreviewConfig()}
       />
     </Layout>
   );
