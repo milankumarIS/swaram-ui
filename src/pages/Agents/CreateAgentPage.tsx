@@ -67,7 +67,7 @@ const CreateAgentPage = () => {
     defaultValues: {
       llm_model: "gemini-2.0-flash",
       stt_language_code: "en-IN",
-      tts_voice: "meera",
+      tts_voice: "anushka",
       tts_language_code: "en-IN",
       max_call_duration_sec: 300,
       welcome_message: "Hello! How can I help you today?",
@@ -82,7 +82,7 @@ const CreateAgentPage = () => {
   const ttsVoice = useWatch({
     control,
     name: "tts_voice",
-    defaultValue: "meera",
+    defaultValue: "anushka",
   });
   const welcomeMessage = useWatch({
     control,
@@ -176,64 +176,69 @@ const CreateAgentPage = () => {
               ))}
             </nav>
 
-            <form
-              onSubmit={handleSubmit(onSubmit)}
+            <div
               onKeyDown={(e) => {
-                // Prevent Enter key from submitting form - only button click should submit
                 if (e.key === "Enter") {
+                  // If it's a textarea, let it be
+                  if ((e.target as HTMLElement).tagName === "TEXTAREA") return;
+
                   e.preventDefault();
-                  // Move to next step if not on last step
+                  e.stopPropagation();
                   if (step < steps.length) {
                     nextStep();
                   }
+                  // On step 4, Enter does nothing to prevent auto-deploy
                 }
               }}
             >
-              <div className="ca-panel">
-                {apiError && <div className="ca-error-banner">{apiError}</div>}
+              <form onSubmit={(e) => e.preventDefault()}>
+                <div className="ca-panel">
+                  {apiError && (
+                    <div className="ca-error-banner">{apiError}</div>
+                  )}
 
-                {step === 1 && (
-                  <div className="form-step animate-in">
-                    <header className="form-header">
-                      <h2 className="form-step-title">Agent Identity</h2>
-                    </header>
-                    <div className="form-group">
-                      <label className="label">Display Name</label>
-                      <input
-                        className="input"
-                        placeholder="e.g. Support Specialist"
-                        {...register("name")}
-                      />
-                      {errors.name && (
-                        <span className="error-text">
-                          {errors.name.message}
-                        </span>
-                      )}
+                  {step === 1 && (
+                    <div className="form-step animate-in">
+                      <header className="form-header">
+                        <h2 className="form-step-title">Agent Identity</h2>
+                      </header>
+                      <div className="form-group">
+                        <label className="label">Display Name</label>
+                        <input
+                          className="input"
+                          placeholder="e.g. Support Specialist"
+                          {...register("name")}
+                        />
+                        {errors.name && (
+                          <span className="error-text">
+                            {errors.name.message}
+                          </span>
+                        )}
+                      </div>
+                      <div className="form-group">
+                        <label className="label">System Instructions</label>
+                        <textarea
+                          className="input"
+                          rows={6}
+                          placeholder="Define the behavior, personality, and knowledge of your agent..."
+                          {...register("system_prompt")}
+                        />
+                        {errors.system_prompt && (
+                          <span className="error-text">
+                            {errors.system_prompt.message}
+                          </span>
+                        )}
+                      </div>
+                      <div className="form-group">
+                        <label className="label">Welcome Message</label>
+                        <input
+                          className="input"
+                          placeholder="What the agent says first..."
+                          {...register("welcome_message")}
+                        />
+                      </div>
                     </div>
-                    <div className="form-group">
-                      <label className="label">System Instructions</label>
-                      <textarea
-                        className="input"
-                        rows={6}
-                        placeholder="Define the behavior, personality, and knowledge of your agent..."
-                        {...register("system_prompt")}
-                      />
-                      {errors.system_prompt && (
-                        <span className="error-text">
-                          {errors.system_prompt.message}
-                        </span>
-                      )}
-                    </div>
-                    <div className="form-group">
-                      <label className="label">Welcome Message</label>
-                      <input
-                        className="input"
-                        placeholder="What the agent says first..."
-                        {...register("welcome_message")}
-                      />
-                    </div>
-                  </div>
-                )}
+                  )}
 
                 {step === 2 && (
                   <div className="form-step animate-in">
@@ -382,9 +387,10 @@ const CreateAgentPage = () => {
                   </button>
                 ) : (
                   <button
-                    type="submit"
+                    type="button"
                     className="btn-primary"
                     disabled={loading}
+                    onClick={handleSubmit(onSubmit)}
                   >
                     {loading ? "Creating..." : "Deploy Agent"}
                   </button>
@@ -392,6 +398,7 @@ const CreateAgentPage = () => {
               </div>
             </form>
           </div>
+        </div>
 
           {/* Right: Live Preview */}
           <div className="builder-sidebar">

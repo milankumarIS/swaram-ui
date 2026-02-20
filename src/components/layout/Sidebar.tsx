@@ -4,7 +4,6 @@ import {
   LayoutDashboard,
   LogOut,
   MessageSquare,
-  Settings,
   User,
   HelpCircle
 } from "lucide-react";
@@ -25,13 +24,10 @@ const Sidebar = () => {
 
   const navItems: NavItem[] = [
     { icon: <LayoutDashboard size={18} />, label: "Dashboard", path: "/dashboard" },
-    // { icon: <Users size={18} />, label: "My Agents", path: "/dashboard" }, // In this simple version, same as dashboard
     { icon: <MessageSquare size={18} />, label: "Sessions", path: "/sessions" },
     { icon: <BarChart2 size={18} />, label: "Analytics", path: "/analytics" },
-    { icon: <User size={18} />, label: "Profile", path: "/profile",external:false },
-    // { icon: <Settings size={18} />, label: "Settings", path: "/settings" },
+    { icon: <User size={18} />, label: "Profile", path: "/profile" },
     { icon: <HelpCircle size={18} />, label: "Contact Us", path: "/contact" },
-    // { icon: <HelpCircle size={18} />, label: "Documentation", path: "https://github.com", external: true },
   ];
 
   return (

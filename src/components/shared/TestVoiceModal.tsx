@@ -93,7 +93,7 @@ const TestVoiceModal = ({
               <iframe
                 src={embedUrl}
                 width="100%"
-                height="600"
+                height="400"
                 allow="microphone"
                 style={{
                   border: "none",

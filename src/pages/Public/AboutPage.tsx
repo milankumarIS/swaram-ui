@@ -11,7 +11,7 @@ const AboutPage = () => {
           <Link to="/" className="back-link">
             <ArrowLeft size={16} /> Back
           </Link>
-          <h1 className="legal-title">About Swaram</h1>
+          <h1 className="legal-title">Architecting Voice Intelligence</h1>
           <p className="legal-subtitle">
             Synthesizing the Signal and the Silence.
           </p>
@@ -19,36 +19,38 @@ const AboutPage = () => {
 
         <div className="legal-section">
           <p>
-            Swaram is a precision audio platform built for the next generation
-            of digital interaction. We believe that every brand deserves a voice
-            that is not just heard, but <span className="italic">felt</span>.
+            Swaram is a high-precision audio platform engineered for the next 
+            generation of digital orchestration. We believe that professional 
+            institutions deserve a voice that is not just heard, but 
+            commanding in its authority and warmth.
           </p>
           <p>
-            Most voice AI platforms cobble together third-party APIs—resulting
-            in awkward delays, robotic responses, and frustrated users. We've
-            engineered an integrated pipeline from the ground up, optimized for
-            the milliseconds that make conversations feel natural.
+            Traditional voice AI platforms act as fragmented middleware—resulting 
+            in critical latency, robotic cadence, and degraded user trust. We 
+            have engineered an integrated, low-latency pipeline from the 
+            foundation, optimized for the milliseconds that define human connection.
           </p>
         </div>
 
         <section className="legal-section">
-          <h2 className="section-heading">01 ORIGIN</h2>
-          <h3>Our Philosophy</h3>
+          <h2 className="section-heading">01 GENESIS</h2>
+          <h3>Our Engineering Philosophy</h3>
           <p>
-            At Swaram, we focus on the space between the notes. Our technology
-            is designed to bridge the gap between human intuition and machine
-            intelligence.
+            At Swaram, we focus on the space between the notes. Our technology 
+            is designed to bridge the chasm between artificial intelligence and 
+            human intuition.
           </p>
           <p>
-            Swaram was born from a simple observation: the internet is too
-            quiet. While LLMs have unlocked incredible text-based intelligence,
-            the warmth, nuance, and efficiency of the human voice stayed locked
-            behind complex APIs and high-latency bridges.
+            The project began with a fundamental observation: the digital world 
+            suffers from a systemic lack of audio presence. While LLMs have 
+            unlocked a new era of intelligence, that intelligence remains 
+            trapped behind high-latency bridges and robotic delivery.
           </p>
           <p>
-            We built Swaram to synthesize the "Signal"—the intelligence of
-            modern AI—with the "Silence"—the precision and respect for user
-            experience that professional brands demand.
+            We founded Swaram to build the missing conversational infrastructure. 
+            We synthesize the "Signal"—the core intelligence of modern AI—with 
+            the "Silence"—the precision, respect, and UX depth required for 
+            institutional-grade applications.
           </p>
         </section>
 

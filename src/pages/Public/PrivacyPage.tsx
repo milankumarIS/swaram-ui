@@ -11,8 +11,10 @@ const PrivacyPage = () => {
           <Link to="/" className="back-link">
             <ArrowLeft size={16} /> Back
           </Link>
-          <h1 className="legal-title">Privacy Policy</h1>
-          <p className="legal-subtitle">Version 1.0 — Swaram</p>
+          <h1 className="legal-title">Privacy Sovereignty</h1>
+          <p className="legal-subtitle">
+            Governance, transparency, and user-centric data protocols.
+          </p>
           <p>
             This Privacy Policy describes how Swaram ("we", "us", or "our")
             collects, uses, and shares your personal information when you use our services.
@@ -48,6 +50,15 @@ const PrivacyPage = () => {
             infrastructure partners and model providers (like Gemini and OpenAI) for 
             the sole purpose of providing the voice service, or as required by law 
             to comply with legal obligations.
+          </p>
+        </section>
+
+        <section className="legal-section">
+          <h2 className="section-heading">01 CORE DATA PROTOCOLS</h2>
+          <p>
+            At Swaram, we operate on the principle of data minimization. We only 
+            process information that is fundamentally required to deliver high-fidelity 
+            conversational intelligence.
           </p>
         </section>
 

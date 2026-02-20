@@ -94,10 +94,10 @@ const AppContent = () => {
           <Route path="/agents/new" element={
             <ProtectedRoute><CreateAgentPage /></ProtectedRoute>
           } />
-          <Route path="/agents/:slug" element={
+          <Route path="/agents/:id" element={
             <ProtectedRoute><AgentDetailPage /></ProtectedRoute>
           } />
-          <Route path="/agents/:slug/edit" element={
+          <Route path="/agents/:id/edit" element={
             <ProtectedRoute><EditAgentPage /></ProtectedRoute>
           } />
           <Route path="/sessions" element={

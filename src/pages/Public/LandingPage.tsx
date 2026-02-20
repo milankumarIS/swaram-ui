@@ -1,7 +1,7 @@
 // src/pages/Public/LandingPage.tsx
 import { Link } from "react-router-dom";
 import { useAuth } from "../../components/context/AuthContext";
-import { Mic, Sliders, Code2, ArrowRight, Languages } from "lucide-react";
+import { Mic, Code2, ArrowRight, Languages } from "lucide-react";
 import { motion } from "framer-motion";
 import "./LandingPage.css";
 
@@ -123,13 +123,11 @@ const LandingPage = () => {
       <motion.section className="landing-features">
         <div className="container">
           <header className="section-header">
-            <span className="section-tag">What Makes Us Different</span>
-            <h2 className="section-title">Seamless. Not synthetic.</h2>
+            <span className="section-tag">ENGINEERING EXCELLENCE</span>
+            <h2 className="section-title">The Architecture of Trust</h2>
             <p className="section-description">
-              While other platforms stitch together APIs with jarring delays,
-              we've built an integrated voice pipeline that responds faster than
-              your visitors can blink. Every millisecond matters in human
-              conversation.
+              We bridge the gap between artificial intelligence and human
+              intuition with institutional-grade conversational infrastructure.
             </p>
           </header>
 
@@ -154,24 +152,21 @@ const LandingPage = () => {
             </div>
 
             <div
-              className="bento-item secondary-feature animate-in"
+              className="bento-item secondary-feature identity-forge animate-in"
               style={{ animationDelay: "0.1s" }}
             >
               <div className="bento-visual">
-                <div className="visual-overlay"></div>
-                <img
-                  src="https://images.unsplash.com/photo-1663789669038-ba180c8c155a?q=80&w=1228&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-                  alt="Identity Forge"
-                  className="bento-bg"
-                />
+                <div className="forge-orb-container">
+                  <div className="forge-orb"></div>
+                  <div className="forge-scan-line"></div>
+                </div>
               </div>
               <div className="bento-content">
-                <Sliders className="bento-icon" />
-                <h3>Zero Setup Required</h3>
+                <Mic size={24} className="feature-icon" />
+                <h3>Voice Identity Engineering</h3>
                 <p>
-                  No WebSocket servers. No audio pipelines. No DevOps
-                  nightmares. Just paste an iframe and your website starts
-                  speaking.
+                  Deploy agents with consistent, institutional tone and
+                  unmatched acoustic clarity.
                 </p>
               </div>
             </div>
@@ -217,10 +212,10 @@ const LandingPage = () => {
                   className="bento-text-group"
                   style={{ marginBottom: "12px" }}
                 >
-                  <h3>Regional Depth</h3>
+                  <h3>Multilingual Precision</h3>
                   <p>
-                    Native support for 10+ Indian languages including Hindi,
-                    Tamil, and Bengali.
+                    Native support for 10+ regional languages with zero code
+                    overhead and perfect phonetic accuracy.
                   </p>
                 </div>
                 <div className="languages-tag-cloud">
