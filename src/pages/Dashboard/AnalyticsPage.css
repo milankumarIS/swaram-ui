@@ -97,9 +97,40 @@
 }
 
 @media (max-width: 1200px) {
-  .analytics-grid { grid-template-columns: repeat(2, 1fr); }
+  .analytics-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
 }
 
-@media (max-width: 600px) {
-  .analytics-grid { grid-template-columns: 1fr; }
+@media (max-width: 768px) {
+  .analytics-grid {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+
+  .stat-card {
+    padding: 24px;
+  }
+
+  .stat-value {
+    font-size: 28px;
+  }
+
+  .chart-placeholder-card {
+    padding: 24px 20px;
+  }
+
+  .mock-chart-container {
+    height: 150px;
+  }
+}
+
+@media (max-width: 480px) {
+  .stat-card {
+    padding: 20px;
+  }
+
+  .stat-value {
+    font-size: 24px;
+  }
 }

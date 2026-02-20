@@ -15,14 +15,16 @@ const LandingPage = () => {
         <div className="container">
           <div className="hero-accent-mark"></div>
           <h1 className="hero-title">
-            Your website,
+            Transform Your Website Into A
             <br />
-            finally able to <span className="italic">speak.</span>
+            <span className="italic">Living Conversation</span>
           </h1>
           <p className="hero-subtitle">
-            Build a voice AI agent in minutes. Drop an iframe into any website.
+            The only voice AI platform that feels truly human. No lag. No
+            robotic pauses.
             <br />
-            Let your visitors talk to your brand — in their language.
+            Just seamless, natural conversations that happen in real-time —
+            embedded in a single line of code.
           </p>
           <div className="hero-cta-group">
             <Link
@@ -120,8 +122,14 @@ const LandingPage = () => {
       <motion.section className="landing-features">
         <div className="container">
           <header className="section-header">
-            <span className="section-tag">Capabilities</span>
-            <h2 className="section-title">Engineered for the elite.</h2>
+            <span className="section-tag">What Makes Us Different</span>
+            <h2 className="section-title">Seamless. Not synthetic.</h2>
+            <p className="section-description">
+              While other platforms stitch together APIs with jarring delays,
+              we've built an integrated voice pipeline that responds faster than
+              your visitors can blink. Every millisecond matters in human
+              conversation.
+            </p>
           </header>
 
           <div className="bento-grid">
@@ -136,10 +144,10 @@ const LandingPage = () => {
               </div>
               <div className="bento-content">
                 <Mic className="bento-icon" />
-                <h3>Low Latency Bridge</h3>
+                <h3>Truly Real-Time Voice</h3>
                 <p>
-                  Sub-500ms response times that feel indistinguishable from
-                  human conversation.
+                  Sub-500ms end-to-end latency. Most platforms take 2-3 seconds.
+                  We respond before your visitor finishes their thought.
                 </p>
               </div>
             </div>
@@ -158,9 +166,11 @@ const LandingPage = () => {
               </div>
               <div className="bento-content">
                 <Sliders className="bento-icon" />
-                <h3>Identity Forge</h3>
+                <h3>Zero Setup Required</h3>
                 <p>
-                  Define persona, tone, and knowledge with surgical precision.
+                  No WebSocket servers. No audio pipelines. No DevOps
+                  nightmares. Just paste an iframe and your website starts
+                  speaking.
                 </p>
               </div>
             </div>
@@ -179,8 +189,11 @@ const LandingPage = () => {
               </div>
               <div className="bento-content">
                 <Code2 className="bento-icon" />
-                <h3>Drop-in SDK</h3>
-                <p>A single line of code to make your entire site speak.</p>
+                <h3>Conversation, Not Commands</h3>
+                <p>
+                  Natural turn-taking, interruptions, and context awareness. It
+                  feels like talking to a person, not a chatbot.
+                </p>
               </div>
             </div>
 
@@ -260,7 +273,7 @@ const LandingPage = () => {
 
             <div className="use-cases-visual">
               <div className="iphone-mockup">
-                <motion.div 
+                <motion.div
                   className="iphone-screen"
                   initial="hidden"
                   whileInView="show"
@@ -271,52 +284,53 @@ const LandingPage = () => {
                       opacity: 1,
                       transition: {
                         staggerChildren: 0.8,
-                        delayChildren: 0.5
-                      }
-                    }
+                        delayChildren: 0.5,
+                      },
+                    },
                   }}
                 >
-                  <motion.div 
+                  <motion.div
                     className="chat-bubble bot"
                     variants={{
                       hidden: { opacity: 0, x: -20, scale: 0.9 },
-                      show: { opacity: 1, x: 0, scale: 1 }
+                      show: { opacity: 1, x: 0, scale: 1 },
                     }}
                   >
                     "How can I help you today?"
                   </motion.div>
-                  <motion.div 
+                  <motion.div
                     className="chat-bubble user"
                     variants={{
                       hidden: { opacity: 0, x: 20, scale: 0.9 },
-                      show: { opacity: 1, x: 0, scale: 1 }
+                      show: { opacity: 1, x: 0, scale: 1 },
                     }}
                   >
                     "I need to track my order."
                   </motion.div>
-                  <motion.div 
+                  <motion.div
                     className="chat-bubble bot"
                     variants={{
                       hidden: { opacity: 0, x: -20, scale: 0.9 },
-                      show: { opacity: 1, x: 0, scale: 1 }
+                      show: { opacity: 1, x: 0, scale: 1 },
                     }}
                   >
                     "Searching... I've found your delivery."
                   </motion.div>
-                  <motion.div 
+                  <motion.div
                     className="chat-bubble bot"
                     variants={{
                       hidden: { opacity: 0, x: -20, scale: 0.9 },
-                      show: { opacity: 1, x: 0, scale: 1 }
+                      show: { opacity: 1, x: 0, scale: 1 },
                     }}
                   >
-                    "Your order #45821 was shipped yesterday via Express Delivery."
+                    "Your order #45821 was shipped yesterday via Express
+                    Delivery."
                   </motion.div>
-                  <motion.div 
+                  <motion.div
                     className="chat-bubble user"
                     variants={{
                       hidden: { opacity: 0, x: 20, scale: 0.9 },
-                      show: { opacity: 1, x: 0, scale: 1 }
+                      show: { opacity: 1, x: 0, scale: 1 },
                     }}
                   >
                     "Can I see the live tracking link?"

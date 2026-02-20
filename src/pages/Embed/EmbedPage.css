@@ -1,21 +1,27 @@
 /* src/pages/Embed/EmbedPage.css — Signal & Silence Widget */
 
-*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
 
 :root {
   /* Critical: These must match the parent vars for visual consistency */
-  --bg-void:    #050505;
+  --bg-void: #050505;
   --bg-surface: #0a0a0a;
-  --accent:     #ebae5b;
+  --accent: #ebae5b;
   --accent-dim: rgba(235, 174, 91, 0.1);
   --accent-ghost: rgba(235, 174, 91, 0.05);
   --text-primary: #ffffff;
   --text-secondary: rgba(255, 255, 255, 0.7);
   --text-tertiary: rgba(255, 255, 255, 0.4);
   --border-dim: rgba(255, 255, 255, 0.06);
-  --font-display: 'DM Serif Display', serif;
-  --font-mono: 'DM Mono', monospace;
-  --font-body: 'Instrument Sans', sans-serif;
+  --font-display: "DM Serif Display", serif;
+  --font-mono: "DM Mono", monospace;
+  --font-body: "Instrument Sans", sans-serif;
   --radius-card: 20px;
   --transition-fast: 0.2s ease;
 }
@@ -255,12 +261,128 @@
 
 /* ── Animations ── */
 @keyframes fadeSlideUp {
-  from { opacity: 0; transform: translateY(20px); }
-  to { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 @keyframes pulse {
-  0% { opacity: 1; }
-  50% { opacity: 0.4; }
-  100% { opacity: 1; }
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.4;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+/* ── Responsive ── */
+@media (max-width: 768px) {
+  .embed-welcome {
+    padding: 24px 20px;
+  }
+
+  .embed-logo-container {
+    width: 100px;
+    height: 100px;
+  }
+
+  .embed-agent-name {
+    font-size: 24px;
+  }
+
+  .embed-welcome-msg {
+    font-size: 13px;
+    max-width: 90%;
+  }
+
+  .embed-start-btn {
+    font-size: 10px;
+    padding: 14px 28px;
+  }
+
+  .embed-session {
+    padding: 16px;
+  }
+
+  .session-header {
+    padding: 12px 16px;
+    gap: 8px;
+  }
+
+  .agent-name-text {
+    font-size: 13px;
+  }
+
+  .status-dot {
+    width: 6px;
+    height: 6px;
+  }
+
+  .status-label {
+    font-size: 9px;
+  }
+
+  .visualizer {
+    height: 200px;
+    padding: 24px 16px;
+  }
+
+  .wave-bar {
+    min-height: 20px;
+  }
+
+  .transcript-panel {
+    padding: 16px;
+    max-height: 180px;
+  }
+
+  .transcript-bubble {
+    font-size: 13px;
+    padding: 10px 14px;
+  }
+
+  .controls-bar {
+    padding: 16px;
+    gap: 12px;
+  }
+
+  .control-btn {
+    font-size: 9px;
+    padding: 10px;
+  }
+}
+
+@media (max-width: 480px) {
+  .embed-agent-name {
+    font-size: 20px;
+  }
+
+  .session-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .visualizer {
+    height: 150px;
+  }
+
+  .transcript-panel {
+    max-height: 150px;
+  }
+
+  .controls-bar {
+    flex-direction: column;
+  }
+
+  .control-btn {
+    width: 100%;
+  }
 }

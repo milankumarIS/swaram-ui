@@ -325,8 +325,12 @@
 }
 
 @keyframes ticker {
-  0% { transform: translateX(0); }
-  100% { transform: translateX(-50%); }
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
 }
 
 .ticker-content span {
@@ -524,7 +528,10 @@
   color: var(--accent);
 }
 
-.use-case-item h3 { font-size: 18px; margin-bottom: 12px; }
+.use-case-item h3 {
+  font-size: 18px;
+  margin-bottom: 12px;
+}
 
 .use-cases-visual {
   background: var(--bg-surface);
@@ -578,11 +585,153 @@
 
 /* ── Responsive ── */
 @media (max-width: 1024px) {
-  .bento-grid { grid-template-columns: repeat(2, 1fr); grid-template-rows: auto; }
-  .use-cases-layout { grid-template-columns: 1fr; }
+  .landing-hero {
+    padding: 80px 0 60px;
+  }
+
+  .hero-title {
+    font-size: 48px;
+  }
+
+  .hero-subtitle {
+    font-size: var(--text-base);
+  }
+
+  .hero-preview {
+    max-width: 350px;
+  }
+
+  .bento-grid {
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: auto;
+  }
+
+  .bento-item.main-feature {
+    grid-column: span 2;
+  }
+
+  .use-cases-layout {
+    grid-template-columns: 1fr;
+    gap: 48px;
+  }
+
+  .steps-container {
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+
+  .pricing-grid {
+    grid-template-columns: 1fr;
+    max-width: 400px;
+    margin: 0 auto;
+  }
 }
 
 @media (max-width: 768px) {
-  .section-title { font-size: 32px; }
-  .bento-grid { grid-template-columns: 1fr; }
+  .landing-hero {
+    padding: 60px 0 40px;
+  }
+
+  .hero-title {
+    font-size: 36px;
+  }
+
+  .hero-subtitle {
+    font-size: var(--text-sm);
+    margin-bottom: 32px;
+  }
+
+  .hero-cta-group {
+    flex-direction: column;
+    gap: 16px;
+    width: 100%;
+  }
+
+  .hero-cta-group .btn-primary,
+  .hero-cta-group .btn-see-live {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .hero-stats {
+    flex-direction: column;
+    gap: 8px;
+    font-size: 10px;
+  }
+
+  .hero-stats span:nth-child(2),
+  .hero-stats span:nth-child(4) {
+    display: none;
+  }
+
+  .hero-preview {
+    max-width: 100%;
+  }
+
+  .section-title {
+    font-size: 32px;
+  }
+
+  .section-description {
+    font-size: var(--text-sm);
+  }
+
+  .bento-grid {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto;
+    gap: 16px;
+  }
+
+  .bento-item {
+    padding: 32px 24px;
+    min-height: 240px;
+  }
+
+  .bento-item.main-feature {
+    grid-column: span 1;
+  }
+
+  .landing-features {
+    padding: 60px 0;
+  }
+
+  .landing-steps {
+    padding: 60px 0;
+  }
+
+  .use-cases-visual {
+    padding: 24px;
+  }
+
+  .iphone-mockup {
+    width: 240px;
+    height: 480px;
+  }
+
+  .chat-bubble {
+    font-size: 12px;
+    max-width: 90%;
+  }
+}
+
+@media (max-width: 480px) {
+  .hero-title {
+    font-size: 28px;
+  }
+
+  .hero-subtitle {
+    font-size: 14px;
+  }
+
+  .section-title {
+    font-size: 24px;
+  }
+
+  .bento-item {
+    padding: 24px 20px;
+  }
+
+  .container {
+    padding: 0 16px;
+  }
 }

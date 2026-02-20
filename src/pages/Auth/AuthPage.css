@@ -146,7 +146,44 @@
 
 /* ── Responsive ── */
 @media (max-width: 1024px) {
-  .auth-panel-left { display: none; }
-  .auth-panel-right { flex: 1; padding: 32px; }
-  .auth-logo-link { margin-bottom: 64px; }
+  .auth-panel-left {
+    display: none;
+  }
+
+  .auth-panel-right {
+    flex: 1;
+    padding: 32px;
+  }
+
+  .auth-logo-link {
+    margin-bottom: 64px;
+  }
+}
+
+@media (max-width: 768px) {
+  .auth-panel-right {
+    padding: 24px 20px;
+  }
+
+  .auth-form-container {
+    max-width: 100%;
+  }
+
+  .auth-title {
+    font-size: 20px;
+  }
+
+  .auth-subtitle {
+    font-size: 13px;
+  }
+}
+
+@media (max-width: 480px) {
+  .auth-panel-right {
+    padding: 20px 16px;
+  }
+
+  .auth-title {
+    font-size: 18px;
+  }
 }

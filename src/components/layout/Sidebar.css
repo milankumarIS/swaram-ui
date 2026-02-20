@@ -106,3 +106,20 @@
   color: var(--error);
   background-color: var(--error-dim);
 }
+
+/* Mobile drawer - hidden by default on mobile */
+@media (max-width: 768px) {
+  .sidebar {
+    position: fixed;
+    left: -100%;
+    top: 0;
+    height: 100vh;
+    z-index: 1001;
+    transition: left 0.3s ease-in-out;
+    box-shadow: 4px 0 24px rgba(0, 0, 0, 0.5);
+  }
+
+  .sidebar.mobile-open {
+    left: 0;
+  }
+}
