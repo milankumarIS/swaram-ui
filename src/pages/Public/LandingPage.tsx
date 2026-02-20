@@ -54,19 +54,19 @@ const LandingPage = () => {
               <iframe
                 src="https://swaram.varsaka.com/embed/swaram-demo?token=DEMO_TOKEN_HERE"
                 width="100%"
-                height="650"
+                height="250"
                 allow="microphone"
                 style={{
                   border: "none",
                   borderRadius: "16px",
                   background: "var(--bg-card)",
-                  boxShadow: "0 20px 60px rgba(0, 0, 0, 0.4)",
+                  // boxShadow: "0 20px 60px rgba(0, 0, 0, 0.4)",
                 }}
                 title="Swaram Platform Demo"
               />
             </div>
             <p className="preview-note">
-              🎤 Click "Start Conversation" and ask about features, pricing, or
+              Click "Start Conversation" and ask about features, pricing, or
               how Swaram works!
             </p>
           </div>

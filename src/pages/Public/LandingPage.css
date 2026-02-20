@@ -92,8 +92,8 @@
   position: relative;
   border-radius: 16px;
   overflow: hidden;
-  box-shadow: 0 20px 60px rgba(139, 92, 246, 0.3);
-  border: 1px solid rgba(139, 92, 246, 0.2);
+  box-shadow: 0 20px 60px rgb(235, 174, 91,0.4);
+  border: 1px solid rgba(235, 174, 91, 0.2);
 }
 
 .preview-note {
