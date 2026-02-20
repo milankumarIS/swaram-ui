@@ -1,7 +1,13 @@
 // src/App.tsx
 import { useState, useEffect } from "react";
-import { BrowserRouter as Router, Routes, Route, useLocation } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  useLocation,
+} from "react-router-dom";
 import { AnimatePresence } from "framer-motion";
+import { Toaster } from "react-hot-toast";
 import { AuthProvider } from "./components/context/AuthContext";
 import ProtectedRoute from "./components/shared/ProtectedRoute";
 import Header from "./components/layout/Header";
@@ -9,26 +15,26 @@ import Footer from "./components/layout/Footer";
 import PageWrapper from "./components/shared/PageWrapper";
 
 // Public pages
-import LandingPage    from "./pages/Public/LandingPage";
-import LoginPage      from "./pages/Auth/LoginPage";
-import RegisterPage   from "./pages/Auth/RegisterPage";
-import AboutPage      from "./pages/Public/AboutPage";
-import TermsPage      from "./pages/Public/TermsPage";
-import PrivacyPage    from "./pages/Public/PrivacyPage";
-import SecurityPage   from "./pages/Public/SecurityPage";
-import ContactPage    from "./pages/Public/ContactPage";
+import LandingPage from "./pages/Public/LandingPage";
+import LoginPage from "./pages/Auth/LoginPage";
+import RegisterPage from "./pages/Auth/RegisterPage";
+import AboutPage from "./pages/Public/AboutPage";
+import TermsPage from "./pages/Public/TermsPage";
+import PrivacyPage from "./pages/Public/PrivacyPage";
+import SecurityPage from "./pages/Public/SecurityPage";
+import ContactPage from "./pages/Public/ContactPage";
 
 // Protected pages
-import DashboardPage  from "./pages/Dashboard/DashboardPage";
+import DashboardPage from "./pages/Dashboard/DashboardPage";
 import CreateAgentPage from "./pages/Agents/CreateAgentPage";
 import AgentDetailPage from "./pages/Agents/AgentDetailPage";
-import EditAgentPage  from "./pages/Agents/EditAgentPage";
-import SessionsPage   from "./pages/Dashboard/SessionsPage";
-import AnalyticsPage  from "./pages/Dashboard/AnalyticsPage";
-import ProfilePage    from "./pages/Dashboard/ProfilePage";
+import EditAgentPage from "./pages/Agents/EditAgentPage";
+import SessionsPage from "./pages/Dashboard/SessionsPage";
+import AnalyticsPage from "./pages/Dashboard/AnalyticsPage";
+import ProfilePage from "./pages/Dashboard/ProfilePage";
 
 // Embed (public — iframe from customer sites)
-import EmbedPage      from "./pages/Embed/EmbedPage";
+import EmbedPage from "./pages/Embed/EmbedPage";
 
 import "./App.css";
 
@@ -41,8 +47,10 @@ const AppContent = () => {
   useEffect(() => {
     const handleScroll = () => {
       const atTop = window.scrollY === 0;
-      const atBottom = window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 2;
-      
+      const atBottom =
+        window.innerHeight + window.scrollY >=
+        document.documentElement.scrollHeight - 2;
+
       setIsAtTop(atTop);
       setIsAtBottom(atBottom);
     };
@@ -56,9 +64,9 @@ const AppContent = () => {
   return (
     <>
       <Header />
-      <div 
-        className="landing-cover" 
-        data-at-top={isAtTop} 
+      <div
+        className="landing-cover"
+        data-at-top={isAtTop}
         data-at-bottom={isAtBottom}
       />
 
@@ -111,11 +119,21 @@ const AppContent = () => {
           } />
 
           {/* ── 404 ── */}
-          <Route path="*" element={
-            <div style={{ color: "var(--text-secondary)", textAlign: "center", padding: "5rem", fontSize: "1.125rem" }}>
-              404 — Page not found
-            </div>
-          } />
+          <Route
+            path="*"
+            element={
+              <div
+                style={{
+                  color: "var(--text-secondary)",
+                  textAlign: "center",
+                  padding: "5rem",
+                  fontSize: "1.125rem",
+                }}
+              >
+                404 — Page not found
+              </div>
+            }
+          />
         </Routes>
       </AnimatePresence>
       {!isEmbed && <Footer />}
@@ -128,6 +146,33 @@ function App() {
     <AuthProvider>
       <Router>
         <AppContent />
+        <Toaster
+          position="top-right"
+          toastOptions={{
+            duration: 3000,
+            style: {
+              background: "var(--bg-card)",
+              color: "var(--text-primary)",
+              border: "1px solid var(--border-primary)",
+              borderRadius: "12px",
+              padding: "16px",
+              fontSize: "0.9375rem",
+              fontFamily: "var(--font-body)",
+            },
+            success: {
+              iconTheme: {
+                primary: "var(--accent-primary)",
+                secondary: "var(--bg-card)",
+              },
+            },
+            error: {
+              iconTheme: {
+                primary: "var(--error)",
+                secondary: "var(--bg-card)",
+              },
+            },
+          }}
+        />
       </Router>
     </AuthProvider>
   );

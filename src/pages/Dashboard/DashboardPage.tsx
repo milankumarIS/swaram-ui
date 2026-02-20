@@ -1,31 +1,54 @@
 // src/pages/Dashboard/DashboardPage.tsx
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import toast from "react-hot-toast";
 import { useAuth } from "../../components/context/AuthContext";
 import Layout from "../../components/layout/Layout";
 import Loader from "../../components/shared/Loader";
-import { getAgents } from "../../services/services";
+import { getAgents, getDashboardStats } from "../../services/services";
 import type { Agent } from "../../global";
 import { Mic, Copy, Edit2, MoreHorizontal, Sparkles } from "lucide-react";
 import "./DashboardPage.css";
 
 const DashboardPage = () => {
-  const { } = useAuth();
+  const {} = useAuth();
   const [agents, setAgents] = useState<Agent[]>([]);
+  const [stats, setStats] = useState({
+    totalSessions: 0,
+    totalTalkTime: "0m",
+    agentCount: 0,
+  });
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
 
   useEffect(() => {
-    getAgents()
-      .then((res) => setAgents(res.data))
-      .catch(() => setError("Failed to load agents."))
+    Promise.all([getAgents(), getDashboardStats()])
+      .then(([agentsRes, statsRes]) => {
+        setAgents(agentsRes.data);
+        setStats(statsRes.data);
+      })
+      .catch(() => setError("Failed to load dashboard data."))
       .finally(() => setLoading(false));
   }, []);
 
-  const copyEmbedUrl = (slug: string) => {
-    const url = `${window.location.origin}/embed/${slug}`;
-    navigator.clipboard.writeText(url);
-    // TODO: Add toast notification
+  const copyEmbedCode = (agent: Agent) => {
+    const embedUrl = import.meta.env.VITE_EMBED_URL || window.location.origin;
+    const iframeCode = `<iframe
+  src="${embedUrl}/embed/${agent.slug}?token=${agent.embed_token}"
+  width="400"
+  height="600"
+  allow="microphone"
+  style="border:none;border-radius:16px;"
+></iframe>`;
+
+    navigator.clipboard
+      .writeText(iframeCode)
+      .then(() => {
+        toast.success("Embed code copied to clipboard!");
+      })
+      .catch(() => {
+        toast.error("Failed to copy embed code");
+      });
   };
 
   return (
@@ -33,21 +56,25 @@ const DashboardPage = () => {
       <div className="dashboard">
         <header className="dashboard-header">
           <h1 className="page-title">Dashboard</h1>
-          <Link to="/agents/new" className="btn-primary">+ New Agent</Link>
+          <Link to="/agents/new" className="btn-primary">
+            + New Agent
+          </Link>
         </header>
 
         {/* Stats Bar */}
         <div className="stats-bar">
           <div className="stat-card">
-            <span className="stat-value">{agents.length}</span>
+            <span className="stat-value">{stats.agentCount}</span>
             <span className="stat-label">Agents</span>
           </div>
           <div className="stat-card">
-            <span className="stat-value">1,240</span>
+            <span className="stat-value">
+              {stats.totalSessions.toLocaleString()}
+            </span>
             <span className="stat-label">Total Sessions</span>
           </div>
           <div className="stat-card">
-            <span className="stat-value">4h 32m</span>
+            <span className="stat-value">{stats.totalTalkTime}</span>
             <span className="stat-label">Talk Time</span>
           </div>
         </div>
@@ -68,8 +95,12 @@ const DashboardPage = () => {
                   <Mic size={32} />
                   <div className="empty-circle"></div>
                 </div>
-                <h2 className="empty-title">Your first agent is one prompt away.</h2>
-                <Link to="/agents/new" className="btn-primary">+ Create Agent</Link>
+                <h2 className="empty-title">
+                  Your first agent is one prompt away.
+                </h2>
+                <Link to="/agents/new" className="btn-primary">
+                  + Create Agent
+                </Link>
               </div>
             ) : (
               <div className="table-wrapper">
@@ -100,24 +131,41 @@ const DashboardPage = () => {
                           </div>
                         </td>
                         <td>
-                          <span className="agent-lang">{agent.stt_language_code}</span>
-                        </td>
-                        <td>
-                          <span className={`badge ${agent.is_active ? 'badge-active' : 'badge-idle'}`}>
-                            {agent.is_active ? 'Active' : 'Idle'}
+                          <span className="agent-lang">
+                            {agent.stt_language_code}
                           </span>
                         </td>
                         <td>
-                          <span className="stat-num">{Math.floor(Math.random() * 500)}</span>
+                          <span
+                            className={`badge ${agent.is_active ? "badge-active" : "badge-idle"}`}
+                          >
+                            {agent.is_active ? "Active" : "Idle"}
+                          </span>
+                        </td>
+                        <td>
+                          <span className="stat-num">
+                            {agent.session_count_30d || 0}
+                          </span>
                         </td>
                         <td className="actions-cell">
-                          <button className="btn-ghost icon-btn" onClick={() => copyEmbedUrl(agent.slug)}>
+                          <button
+                            className="btn-ghost icon-btn"
+                            onClick={() => copyEmbedCode(agent)}
+                            title="Copy embed code"
+                          >
                             <Copy size={16} />
                           </button>
-                          <Link to={`/agents/${agent.id}/edit`} className="btn-ghost icon-btn">
+                          <Link
+                            to={`/agents/${agent.id}/edit`}
+                            className="btn-ghost icon-btn"
+                            title="Edit agent"
+                          >
                             <Edit2 size={16} />
                           </Link>
-                          <button className="btn-ghost icon-btn">
+                          <button
+                            className="btn-ghost icon-btn"
+                            title="More options"
+                          >
                             <MoreHorizontal size={16} />
                           </button>
                         </td>

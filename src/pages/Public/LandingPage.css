@@ -72,9 +72,36 @@
 
 /* ── Hero Preview ── */
 .hero-preview {
-  max-width: 400px;
+  max-width: 480px;
   margin: 0 auto;
   perspective: 1000px;
+}
+
+.preview-label {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  text-align: center;
+  display: block;
+  margin-bottom: 20px;
+}
+
+.preview-embed-container {
+  position: relative;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 20px 60px rgba(139, 92, 246, 0.3);
+  border: 1px solid rgba(139, 92, 246, 0.2);
+}
+
+.preview-note {
+  text-align: center;
+  font-size: 0.875rem;
+  color: var(--text-muted);
+  margin-top: 16px;
+  line-height: 1.5;
 }
 
 .preview-window {
